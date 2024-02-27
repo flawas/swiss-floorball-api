@@ -54,6 +54,7 @@ class Swiss_Floorball_Api_Public {
 
 	}
 
+
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
@@ -73,7 +74,8 @@ class Swiss_Floorball_Api_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/swiss-floorball-api-public.css', array(), $this->version, 'all' );
+		#wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/swiss-floorball-api-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bootstrap.css', array(), $this->version, 'all' );
 
 	}
 
@@ -99,5 +101,11 @@ class Swiss_Floorball_Api_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/swiss-floorball-api-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+
+
+
+
+
 
 }

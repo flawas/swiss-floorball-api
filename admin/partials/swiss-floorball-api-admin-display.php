@@ -40,9 +40,12 @@
 					</tr>
 				</table>
 </div>
+
 <?php
+get_club_games_table(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
 # Vereinsübersicht einblenden
-get_club_teams(get_option('swissfloorball_club_number'));
-get_club_games(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
-get_team_games(429599, get_option('swissfloorball_actual_season'));
+#get_club_teams(get_option('swissfloorball_club_number'));
+#get_club_games(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
+#get_team_games(429599, get_option('swissfloorball_actual_season'));
+
 ?>
