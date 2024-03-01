@@ -1,9 +1,10 @@
 <?php
-/**
-	 * Retrieve the all teams of the club
+
+    /**
+	 * Retrieve the all teams of the club (Admin)
 	 *
 	 * @since     1.0.0
-	 * @return    string    JSON string
+	 * @return    html table
 	 */
 	function get_club_teams($swissfloorball_club_number) {
         # Nur ausführen, wenn $swissfloorball_club_number gesetzt ist
@@ -42,13 +43,52 @@
             <?php
         }
 	}
+    
+    /**
+	 * Retrieve the all teams of the club (Public)
+	 *
+	 * @since     1.0.0
+	 * @return    html table
+	 */
+	function get_club_teams_pub($swissfloorball_club_number) {
+        # Nur ausführen, wenn $swissfloorball_club_number gesetzt ist
+        if($swissfloorball_club_number > 0 || $swissfloorball_club_number > "") {
+            $response = wp_remote_get( 'https://api-v2.swissunihockey.ch/api/clubs/'.$swissfloorball_club_number.'/statistics' );
+            $api_response = json_decode( wp_remote_retrieve_body( $response ), true );
+            
+            $team_count = count($api_response["data"]["regions"]["0"]["rows"]);
+            
+            ?>
+            <h5><?php echo $api_response["data"]["title"];?></h5>
+            <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Team Name</th>
+                            <th>Meisterschaft Platzierung</th>
+                        </tr>
+                    </thead>
+                    <?php 
+                    for ($i = 0; $i < $team_count; $i++) {
+                        ?>
+                        <tr>        
+						    <td><?php echo $api_response["data"]["regions"]["0"]["rows"][$i]["cells"]["0"]["text"]["0"];?></td>
+                            <td><?php echo $api_response["data"]["regions"]["0"]["rows"][$i]["cells"]["1"]["text"]["0"];?></td>
+					    </tr>
+                        <?php 
+                    }
+                    ?>
+				</table>
+            <?php
+        }
+	}
+
 
     function get_club_games($swissfloorball_club_number, $season) {
         $response = wp_remote_get( 'https://api-v2.swissunihockey.ch/api/games?mode=club&club_id='.$swissfloorball_club_number.'&season='.$season.'');
         $api_response = json_decode( wp_remote_retrieve_body( $response ), true );
         $calendar_count = count($api_response["data"]["regions"]["0"]["rows"]);
         ?>
-        <h2><?php echo $api_response["data"]["title"];?></h2>
+        <h5><?php echo $api_response["data"]["title"];?></h5>
 
         <table class="table">
                 <thead>
@@ -76,7 +116,7 @@
 
                     ?>
                     <tr>        
-                        <td><?php echo $date; echo $time; ?></td>
+                        <td><?php echo $date;?> <?php echo $time; ?></td>
                         <td><?php echo $league;?></td>
                         <td><?php echo $team_home;?></td>
                         <td><?php echo $team_away;?></td>
@@ -165,6 +205,36 @@
         <?php
     }
 
+    function get_seasons() {
+        $response = wp_remote_get( 'https://api-v2.swissunihockey.ch/api/seasons');
+        $api_response = json_decode( wp_remote_retrieve_body( $response ), true );
+        $club_count = count($api_response["entries"]);
+        $seasons_count = count($api_response["entries"]);
+        ?>
+        <h2><?php echo $api_response["text"];?></h2>
+
+        <table class="table">
+                <tr>
+                    <th>Club Name</th>
+                    <th>Season_id</th>
+                </tr>
+                <?php 
+                for ($i = 0; $i < $club_count; $i++) {
+                    $name           = $api_response["entries"][$i]["text"];
+                    $club_id         = $api_response["entries"][$i]["set_in_context"]["season"];
+                    ?>
+                    <tr>        
+                        <td><?php echo $name;?></td>
+                        <td><?php echo $club_id;?></td>
+                    </tr>
+                    <?php 
+                }
+                ?>
+            </table>
+        <?php
+        
+    }
+
     function get_teams(){
         $response = wp_remote_get( 'https://api-v2.swissunihockey.ch/api/clubs');
         $api_response = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -198,7 +268,7 @@
         $api_response = json_decode( wp_remote_retrieve_body( $response ), true );
         $calendar_count = count($api_response["data"]["regions"]["0"]["rows"]);
 
-        for ($i = 0; $i < $calendar_count; $i++) {
+        for ($i = 0; $i < ($calendar_count-3); $i++) {
         
         $game_id = $api_response["data"]["regions"]["0"]["rows"][$i]["link"]["ids"]["0"];
         $game_details = get_gamedetails($game_id);
@@ -236,7 +306,7 @@
 
         ?>
         <div class="container">
-            <div class="row row-cols-1 row-cols-md-3">
+            <div class="row">
         <?php
 
         for ($i = 2; $i < ($calendar_count-2); $i++) {
@@ -249,7 +319,7 @@
             <div class="card">
                 <div class="col">
                     <div class="text-center">
-                        <h6><?php echo $game_details[0];?></h6>                        
+                        <h5><?php echo $game_details[0];?></h5>                        
                         <table class="table">
                                 <tr>
                                     <th><h5></th>
@@ -302,6 +372,12 @@
         return $return_array;
     }
 
+    #ToDo Check Parameters
+
+
+    function get_team_ranking($season, $league, $game_class, $group) {
+
+    }
 
     # ToDo Rankings
     # https://api-v2.swissunihockey.ch/api/rankings?season=2023&league=5&game_class=11&group=415793

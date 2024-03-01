@@ -53,9 +53,10 @@ class Swiss_Floorball_Api_Admin {
 		$this->version = $version;
 		add_action('admin_menu', array( $this, 'addPluginAdminMenu' ), 9);   
 		add_action('admin_init', array( $this, 'registerAndBuildFields' )); 
-		
-	}
 
+	}
+	
+	
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -110,12 +111,14 @@ class Swiss_Floorball_Api_Admin {
 	 */
 	public function addPluginAdminMenu() {
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-		add_menu_page(  $this->plugin_name, 'Swiss Unihockey API', 'administrator', $this->plugin_name, array( $this, 'displayPluginAdminDashboard' ), 'dashicons-database-import', 26 );
+		add_menu_page(  $this->plugin_name, 'Swiss Unihockey', 'administrator', $this->plugin_name, array( $this, 'displayPluginAdminDashboard' ), 'dashicons-database-import', 26 );
 		
 		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
-		add_submenu_page( $this->plugin_name, 'Swiss Unihockey API', 'Einstellungen', 'administrator', $this->plugin_name.'-settings', array( $this, 'displayPluginAdminSettings' ));
-		add_submenu_page( $this->plugin_name, 'Swiss Unihockey API', 'Hilfstabellen', 'administrator', $this->plugin_name.'-helper', array( $this, 'displayPluginAdminHelper' ));
-	
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Einstellungen', 'administrator', $this->plugin_name.'-settings', array( $this, 'displayPluginAdminSettings' ));
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Liga', 'administrator', $this->plugin_name.'-league', array( $this, 'displayPluginAdminHelperLeague' ));
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Team', 'administrator', $this->plugin_name.'-teams', array( $this, 'displayPluginAdminHelperTeams' ));
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Saison', 'administrator', $this->plugin_name.'-seasons', array( $this, 'displayPluginAdminHelperSeasons' ));
+
 	}
 
 	/**
@@ -143,18 +146,48 @@ class Swiss_Floorball_Api_Admin {
 	}
 
 	/**
-	 * Return helper display page settings
+	 * Return league helper display page
 	 *
 	 * @since    1.0.0
 	 */
-	public function displayPluginAdminHelper() {
+	public function displayPluginAdminHelperLeague() {
 		// set this var to be used in the settings-display view
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
 		if(isset($_GET['error_message'])){
 				add_action('admin_notices', array($this,'settingsPageSettingsMessages'));
 				do_action( 'admin_notices', $_GET['error_message'] );
 		}
-		require_once 'partials/'.$this->plugin_name.'-admin-helper-display.php';
+		require_once 'partials/'.$this->plugin_name.'-admin-helper-league-display.php';
+	}
+
+	/**
+	 * Return season helper display page
+	 *
+	 * @since    1.0.0
+	 */
+	public function displayPluginAdminHelperSeasons() {
+		// set this var to be used in the settings-display view
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
+		if(isset($_GET['error_message'])){
+				add_action('admin_notices', array($this,'settingsPageSettingsMessages'));
+				do_action( 'admin_notices', $_GET['error_message'] );
+		}
+		require_once 'partials/'.$this->plugin_name.'-admin-helper-seasons-display.php';
+	}
+
+	/**
+	 * Return teams helper display page
+	 *
+	 * @since    1.0.0
+	 */
+	public function displayPluginAdminHelperTeams() {
+		// set this var to be used in the settings-display view
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general';
+		if(isset($_GET['error_message'])){
+				add_action('admin_notices', array($this,'settingsPageSettingsMessages'));
+				do_action( 'admin_notices', $_GET['error_message'] );
+		}
+		require_once 'partials/'.$this->plugin_name.'-admin-helper-teams-display.php';
 	}
 
 	/**

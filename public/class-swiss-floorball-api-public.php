@@ -51,9 +51,9 @@ class Swiss_Floorball_Api_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+		$this->register_shortcodes();
+		$this->load_dependencies();
 	}
-
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
@@ -102,10 +102,49 @@ class Swiss_Floorball_Api_Public {
 
 	}
 
+	public function load_dependencies() {
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
+	}
 
+	/**
+	 * Registers all shortcodes at once
+	 *
+	 * @return [type] [description]
+	 */
+	public function register_shortcodes() {
 
+		add_shortcode( 'get-club-teams', array( $this, 'get_club_teams_func' ) );
+		add_shortcode( 'get-club-games', array( $this, 'get_club_games_func' ) );
+		add_shortcode( 'get-team-games', array( $this, 'get_team_games_func' ) );
 
+	} // register_shortcodes()
 
+	public function get_club_teams_func() {
+		ob_start();
+		get_club_teams_pub(get_option('swissfloorball_club_number'));
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+	}
 
+	public function get_club_games_func(){
+		ob_start();
+		get_club_games(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+	}
+
+	public function get_team_games_func( $atts ){
+		$a = shortcode_atts( array(
+			'team_id' => '',
+		), $atts );
+
+		ob_start();
+		get_team_games($a['team_id'], get_option('swissfloorball_actual_season'));
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+	}
 
 }
