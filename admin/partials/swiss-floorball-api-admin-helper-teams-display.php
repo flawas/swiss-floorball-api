@@ -13,9 +13,13 @@
  */
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<div class="wrap">
-		        <div id="icon-themes" class="icon32"></div>  
-		        <h2>Swiss Unihockey API Hilfstabellen</h2>  
-		         <!--NEED THE settings_errors below so that the errors/success messages are shown after submission - wasn't working once we started using add_menu_page and stopped using add_options_page so needed this-->
-				<?php get_teams();?>
+<div class="wrap sfa-admin-wrap">
+	<div class="sfa-admin-header">
+		<h1>👥 Teams</h1>
+		<p>Übersicht aller verfügbaren Teams</p>
+	</div>
+
+	<div class="sfa-table-container">
+		<?php Swiss_Floorball_API_Display::render_clubs();?>
+	</div>
 </div>

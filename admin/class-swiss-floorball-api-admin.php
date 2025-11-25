@@ -231,30 +231,7 @@ class Swiss_Floorball_Api_Admin {
 			'settings_page_general_settings'                   
 		);
 
-		unset($args);
-		$args = array (
-							'type'      => 'input',
-							'subtype'   => 'string',
-							'id'    => 'swissfloorball_api_url',
-							'name'      => 'swissfloorball_api_url',
-							'required' => 'true',
-							'get_options_list' => '',
-							'value_type'=>'normal',
-							'wp_data' => 'option'
-					);
-		add_settings_field(
-			'swissfloorball_api_url',
-			'Swiss Floorball API URL',
-			array( $this, 'settings_page_render_settings_field' ),
-			'settings_page_general_settings',
-			'settings_page_general_section',
-			$args
-		);
 
-		register_setting(
-			'settings_page_general_settings', 
-			'swissfloorball_api_url'
-			);
 
 		unset($args);
 		$args = array (

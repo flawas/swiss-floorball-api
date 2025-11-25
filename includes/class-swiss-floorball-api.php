@@ -122,7 +122,8 @@ class Swiss_Floorball_Api {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-swiss-floorball-api-public.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swiss-floorball-api-client.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swiss-floorball-api-display.php';
 
 
 		$this->loader = new Swiss_Floorball_Api_Loader();

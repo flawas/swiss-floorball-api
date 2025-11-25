@@ -13,16 +13,30 @@
  */
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<div class="wrap">
-		        <div id="icon-themes" class="icon32"></div>  
-		        <h2>Swiss Unihockey API Einstellungen</h2>  
-		         <!--NEED THE settings_errors below so that the errors/success messages are shown after submission - wasn't working once we started using add_menu_page and stopped using add_options_page so needed this-->
-				<?php settings_errors(); ?>  
-		        <form method="POST" action="options.php">  
-		            <?php 
-		                settings_fields( 'settings_page_general_settings' );
-		                do_settings_sections( 'settings_page_general_settings' ); 
-		            ?>             
-		            <?php submit_button(); ?>  
-		        </form> 
+<div class="wrap sfa-admin-wrap">
+	<div class="sfa-admin-header">
+		<h1>⚙️ Einstellungen</h1>
+		<p>Konfigurieren Sie Ihre Swiss Unihockey API Verbindung</p>
+	</div>
+
+	<div class="sfa-form-section">
+		<h2>Plugin Einstellungen</h2>
+		<?php settings_errors(); ?>
+		<p class="sfa-helper-text">Geben Sie hier die erforderlichen Informationen für die Verbindung zur Swiss Unihockey API ein.</p>
+		
+		<form method="POST" action="options.php">  
+			<?php 
+				settings_fields( 'settings_page_general_settings' );
+				do_settings_sections( 'settings_page_general_settings' ); 
+			?>             
+			<?php submit_button('Einstellungen speichern'); ?>  
+		</form>
+	</div>
+
+	<div class="sfa-card">
+		<h3>ℹ️ Hilfe</h3>
+		<p><strong>Club Number:</strong> Die eindeutige ID Ihres Clubs bei Swiss Unihockey</p>
+		<p><strong>Club Name:</strong> Der offizielle Name Ihres Clubs</p>
+		<p><strong>Aktuelle Saison:</strong> Das Jahr der aktuellen Saison (z.B. 2024)</p>
+	</div>
 </div>

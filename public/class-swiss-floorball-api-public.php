@@ -102,7 +102,7 @@ class Swiss_Floorball_Api_Public {
 	}
 
 	public function load_dependencies() {
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
+		// Functions are now loaded via the main plugin class and Swiss_Floorball_API_Display
 	}
 
 	/**
@@ -115,12 +115,22 @@ class Swiss_Floorball_Api_Public {
 		add_shortcode( 'get-club-teams', array( $this, 'get_club_teams_func' ) );
 		add_shortcode( 'get-club-games', array( $this, 'get_club_games_func' ) );
 		add_shortcode( 'get-team-games', array( $this, 'get_team_games_func' ) );
+        add_shortcode( 'get-clubs', array( $this, 'get_clubs_func' ) );
+        add_shortcode( 'get-calendars', array( $this, 'get_calendars_func' ) );
+        add_shortcode( 'get-cups', array( $this, 'get_cups_func' ) );
+        add_shortcode( 'get-groups', array( $this, 'get_groups_func' ) );
+        add_shortcode( 'get-teams', array( $this, 'get_teams_func' ) );
+        add_shortcode( 'get-rankings', array( $this, 'get_rankings_func' ) );
+        add_shortcode( 'get-player', array( $this, 'get_player_func' ) );
+        add_shortcode( 'get-national-players', array( $this, 'get_national_players_func' ) );
+        add_shortcode( 'get-topscorers', array( $this, 'get_topscorers_func' ) );
+        add_shortcode( 'get-game-events', array( $this, 'get_game_events_func' ) );
 
 	} // register_shortcodes()
 
 	public function get_club_teams_func() {
 		ob_start();
-		get_club_teams_pub(get_option('swissfloorball_club_number'));
+		Swiss_Floorball_API_Display::render_club_teams(get_option('swissfloorball_club_number'));
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -128,7 +138,7 @@ class Swiss_Floorball_Api_Public {
 
 	public function get_club_games_func(){
 		ob_start();
-		get_club_games(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
+		Swiss_Floorball_API_Display::render_club_games(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -140,10 +150,127 @@ class Swiss_Floorball_Api_Public {
 		), $atts );
 
 		ob_start();
-		get_team_games($a['team_id'], get_option('swissfloorball_actual_season'));
+		Swiss_Floorball_API_Display::render_team_games($a['team_id'], get_option('swissfloorball_actual_season'));
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
 	}
+
+    public function get_clubs_func() {
+        ob_start();
+        Swiss_Floorball_API_Display::render_clubs();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_calendars_func( $atts ) {
+        $a = shortcode_atts( array(
+            'team_id' => '',
+            'club_id' => '',
+            'season' => '',
+            'league' => '',
+            'game_class' => '',
+            'group' => '',
+        ), $atts );
+
+        ob_start();
+        Swiss_Floorball_API_Display::render_calendars($a['team_id'], $a['club_id'], $a['season'], $a['league'], $a['game_class'], $a['group']);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_cups_func() {
+        ob_start();
+        Swiss_Floorball_API_Display::render_cups();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_groups_func( $atts ) {
+        $a = shortcode_atts( array(
+            'season' => get_option('swissfloorball_actual_season'),
+            'league' => '',
+            'game_class' => '',
+        ), $atts );
+
+        ob_start();
+        Swiss_Floorball_API_Display::render_groups($a['season'], $a['league'], $a['game_class']);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_teams_func() {
+        ob_start();
+        Swiss_Floorball_API_Display::render_teams();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_rankings_func( $atts ) {
+        $a = shortcode_atts( array(
+            'season' => get_option('swissfloorball_actual_season'),
+            'league' => '',
+            'game_class' => '',
+            'group' => '',
+        ), $atts );
+
+        ob_start();
+        Swiss_Floorball_API_Display::render_rankings($a['season'], $a['league'], $a['game_class'], $a['group']);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_player_func( $atts ) {
+        $a = shortcode_atts( array(
+            'player_id' => '',
+        ), $atts );
+
+        ob_start();
+        Swiss_Floorball_API_Display::render_player($a['player_id']);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_national_players_func() {
+        ob_start();
+        Swiss_Floorball_API_Display::render_national_players();
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_topscorers_func( $atts ) {
+        $a = shortcode_atts( array(
+            'season' => get_option('swissfloorball_actual_season'),
+            'league' => '',
+            'game_class' => '',
+            'group' => '',
+        ), $atts );
+
+        ob_start();
+        Swiss_Floorball_API_Display::render_topscorers($a['season'], $a['league'], $a['game_class'], $a['group']);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
+
+    public function get_game_events_func( $atts ) {
+        $a = shortcode_atts( array(
+            'game_id' => '',
+        ), $atts );
+
+        ob_start();
+        Swiss_Floorball_API_Display::render_game_events($a['game_id']);
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    }
 
 }

@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:latest
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    platform: linux/amd64
+
+  wordpress:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
+      - .:/var/www/html/wp-content/plugins/swiss-floorball-api
+
+  wp-cli:
+    image: wordpress:cli
+    depends_on:
+      - db
+      - wordpress
+    volumes:
+      - wp_data:/var/www/html
+      - .:/var/www/html/wp-content/plugins/swiss-floorball-api
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    command: >
+      /bin/sh -c "
+        echo 'Waiting for WordPress to be ready...'
+        # Wait for DB to be ready
+        until wp db check --allow-root; do
+          echo 'Waiting for database connection...'
+          sleep 5
+        done
+        
+        echo 'Installing WordPress...'
+        if ! wp core is-installed --allow-root; then
+          wp core install --url=http://localhost:8000 --title='Swiss Floorball API Test' --admin_user=admin --admin_password=admin --admin_email=admin@example.com --skip-email --allow-root
+        else
+          echo 'WordPress already installed.'
+        fi
+        
+        echo 'Activating plugin...'
+        wp plugin activate swiss-floorball-api --allow-root
+        
+        echo 'Creating Shortcuts page...'
+        if ! wp post list --post_type=page --name=shortcuts --field=ID --allow-root | grep -q .; then
+          wp post create --post_type=page --post_title='Shortcuts' --post_status=publish --post_name='shortcuts' --post_content='
+            <h2>get-clubs</h2>[get-clubs]
+            <h2>get-teams</h2>[get-teams]
+            <h2>get-club-teams</h2>[get-club-teams]
+            <h2>get-club-games</h2>[get-club-games]
+            <h2>get-team-games</h2>[get-team-games]
+            <h2>get-calendars</h2>[get-calendars]
+            <h2>get-cups</h2>[get-cups]
+            <h2>get-groups</h2>[get-groups]
+            <h2>get-rankings</h2>[get-rankings]
+            <h2>get-player</h2>[get-player]
+            <h2>get-national-players</h2>[get-national-players]
+            <h2>get-topscorers</h2>[get-topscorers]
+            <h2>get-game-events</h2>[get-game-events]
+          ' --allow-root
+        else
+          echo 'Shortcuts page already exists.'
+        fi
+      "
+
+volumes:
+  db_data:
+  wp_data:
