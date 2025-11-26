@@ -10,6 +10,10 @@
  * @subpackage Swiss_Floorball_Api/public
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -112,19 +116,19 @@ class Swiss_Floorball_Api_Public {
 	 */
 	public function register_shortcodes() {
 
-		add_shortcode( 'get-club-teams', array( $this, 'get_club_teams_func' ) );
-		add_shortcode( 'get-club-games', array( $this, 'get_club_games_func' ) );
-		add_shortcode( 'get-team-games', array( $this, 'get_team_games_func' ) );
-        add_shortcode( 'get-clubs', array( $this, 'get_clubs_func' ) );
-        add_shortcode( 'get-calendars', array( $this, 'get_calendars_func' ) );
-        add_shortcode( 'get-cups', array( $this, 'get_cups_func' ) );
-        add_shortcode( 'get-groups', array( $this, 'get_groups_func' ) );
-        add_shortcode( 'get-teams', array( $this, 'get_teams_func' ) );
-        add_shortcode( 'get-rankings', array( $this, 'get_rankings_func' ) );
-        add_shortcode( 'get-player', array( $this, 'get_player_func' ) );
-        add_shortcode( 'get-national-players', array( $this, 'get_national_players_func' ) );
-        add_shortcode( 'get-topscorers', array( $this, 'get_topscorers_func' ) );
-        add_shortcode( 'get-game-events', array( $this, 'get_game_events_func' ) );
+		add_shortcode( 'suh-club-teams', array( $this, 'get_club_teams_func' ) );
+		add_shortcode( 'suh-club-games', array( $this, 'get_club_games_func' ) );
+		add_shortcode( 'suh-team-games', array( $this, 'get_team_games_func' ) );
+        add_shortcode( 'suh-clubs', array( $this, 'get_clubs_func' ) );
+        add_shortcode( 'suh-calendars', array( $this, 'get_calendars_func' ) );
+        add_shortcode( 'suh-cups', array( $this, 'get_cups_func' ) );
+        add_shortcode( 'suh-groups', array( $this, 'get_groups_func' ) );
+        add_shortcode( 'suh-teams', array( $this, 'get_teams_func' ) );
+        add_shortcode( 'suh-rankings', array( $this, 'get_rankings_func' ) );
+        add_shortcode( 'suh-player', array( $this, 'get_player_func' ) );
+        add_shortcode( 'suh-national-players', array( $this, 'get_national_players_func' ) );
+        add_shortcode( 'suh-topscorers', array( $this, 'get_topscorers_func' ) );
+        add_shortcode( 'suh-game-events', array( $this, 'get_game_events_func' ) );
 
 	} // register_shortcodes()
 

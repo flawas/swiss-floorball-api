@@ -11,6 +11,10 @@
  * @package    Swiss_Floorball_Api
  * @subpackage Swiss_Floorball_Api/admin/partials
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
@@ -53,6 +57,9 @@
 			</p>
 			<p style="margin: 5px 0;">
 				<a href="<?php echo admin_url('admin.php?page=swiss-floorball-api-seasons'); ?>" class="button">Saisons</a>
+			</p>
+			<p style="margin: 5px 0;">
+				<a href="<?php echo admin_url('admin.php?page=swiss-floorball-api-shortcodes'); ?>" class="button">Shortcodes</a>
 			</p>
 		</div>
 	</div>

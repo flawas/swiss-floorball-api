@@ -10,6 +10,10 @@
  * @subpackage Swiss_Floorball_Api/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Fired during plugin activation.
  *

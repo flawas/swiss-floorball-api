@@ -13,6 +13,10 @@
  * @subpackage Swiss_Floorball_Api/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The core plugin class.
  *

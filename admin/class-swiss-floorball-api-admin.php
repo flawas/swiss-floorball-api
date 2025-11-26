@@ -10,6 +10,10 @@
  * @subpackage Swiss_Floorball_Api/admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -53,6 +57,7 @@ class Swiss_Floorball_Api_Admin {
 		$this->version = $version;
 		add_action('admin_menu', array( $this, 'addPluginAdminMenu' ), 9);   
 		add_action('admin_init', array( $this, 'registerAndBuildFields' )); 
+		add_action('admin_post_sfa_clear_cache', array( $this, 'handle_clear_cache' ));
 
 	}
 	
@@ -117,6 +122,7 @@ class Swiss_Floorball_Api_Admin {
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Liga', 'administrator', $this->plugin_name.'-league', array( $this, 'displayPluginAdminHelperLeague' ));
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Team', 'administrator', $this->plugin_name.'-teams', array( $this, 'displayPluginAdminHelperTeams' ));
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Saison', 'administrator', $this->plugin_name.'-seasons', array( $this, 'displayPluginAdminHelperSeasons' ));
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Shortcodes', 'administrator', $this->plugin_name.'-shortcodes', array( $this, 'displayPluginAdminShortcodes' ));
 
 	}
 
@@ -190,6 +196,15 @@ class Swiss_Floorball_Api_Admin {
 	}
 
 	/**
+	 * Return shortcodes display page
+	 *
+	 * @since    1.0.0
+	 */
+	public function displayPluginAdminShortcodes() {
+		require_once 'partials/'.$this->plugin_name.'-admin-shortcodes-display.php';
+	}
+
+	/**
 	 * Return error while loading admin display page settings
 	 *
 	 * @since    1.0.0
@@ -208,6 +223,114 @@ class Swiss_Floorball_Api_Admin {
 					$type
 			);
 	}
+
+/**
+ * Sanitize club number and auto-fetch club name
+ *
+ * @since    1.0.0
+ * @param    int    $club_number    The club number to sanitize
+ * @return   int                    The sanitized club number
+ */
+public function sanitize_club_number( $club_number ) {
+	// Sanitize the club number
+	$club_number = absint( $club_number );
+	
+	// Get the old club number to check if it changed
+	$old_club_number = get_option( 'swissfloorball_club_number' );
+	
+	// If club number changed, clear all cached API data
+	if ( $old_club_number != $club_number && ! empty( $club_number ) ) {
+		global $wpdb;
+		// Delete all transients that start with 'sfa_' (Swiss Floorball API cache)
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_sfa_%' OR option_name LIKE '_transient_timeout_sfa_%'" );
+	}
+	
+	// If club number is empty, return it as is
+	if ( empty( $club_number ) ) {
+		return $club_number;
+	}
+	
+	// Fetch club details from API
+	require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-swiss-floorball-api-client.php';
+	$client = new Swiss_Floorball_API_Client();
+	// Use short cache time (60 seconds) to ensure fresh data when club number changes
+	// Note: The API doesn't have a /clubs/{id} endpoint, so we fetch all clubs and search
+	$api_response = $client->fetch_data( 'clubs', array(), 60 );
+	
+	$club_name = '';
+	
+	// Check if we got a valid response
+	if ( ! is_wp_error( $api_response ) && isset( $api_response['entries'] ) ) {
+		// Search through all clubs to find the one with matching club_id
+		foreach ( $api_response['entries'] as $entry ) {
+			if ( isset( $entry['set_in_context']['club_id'] ) && $entry['set_in_context']['club_id'] == $club_number ) {
+				$club_name = $entry['text'];
+				break;
+			}
+		}
+	}
+	
+	// Update the club name option
+	if ( ! empty( $club_name ) ) {
+		update_option( 'swissfloorball_club_name', sanitize_text_field( $club_name ) );
+		// Add success notice
+		add_settings_error(
+			'swissfloorball_club_name',
+			'club_name_updated',
+			sprintf( __( 'Club name automatically set to: %s', 'swiss-floorball-api' ), $club_name ),
+			'success'
+		);
+	} else {
+		// If API call failed or no name found, clear the club name
+		update_option( 'swissfloorball_club_name', '' );
+		// Add error notice
+		add_settings_error(
+			'swissfloorball_club_name',
+			'club_name_not_found',
+			sprintf( __( 'Could not find club name for club ID: %s', 'swiss-floorball-api' ), $club_number ),
+			'error'
+		);
+		// Log error for debugging
+		error_log( 'Swiss Floorball API: Could not fetch club name for club ID ' . $club_number );
+	}
+	
+	return $club_number;
+}
+
+
+/**
+ * Handle cache clearing request
+ *
+ * @since    1.0.0
+ */
+public function handle_clear_cache() {
+	// Check nonce for security
+	if ( ! isset( $_POST['sfa_clear_cache_nonce'] ) || ! wp_verify_nonce( $_POST['sfa_clear_cache_nonce'], 'sfa_clear_cache_action' ) ) {
+		wp_die( __( 'Security check failed', 'swiss-floorball-api' ) );
+	}
+	
+	// Check user permissions
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( __( 'You do not have permission to perform this action', 'swiss-floorball-api' ) );
+	}
+	
+	// Clear all cached API data
+	global $wpdb;
+	$deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_sfa_%' OR option_name LIKE '_transient_timeout_sfa_%'" );
+	
+	// Redirect back to settings page with success message
+	$redirect_url = add_query_arg(
+		array(
+			'page' => 'swiss-floorball-api-settings',
+			'cache_cleared' => '1',
+			'deleted_count' => $deleted
+		),
+		admin_url( 'admin.php' )
+	);
+	
+	wp_redirect( $redirect_url );
+	exit;
+}
 
 	/**
 	 * Register and build fields
@@ -239,7 +362,7 @@ class Swiss_Floorball_Api_Admin {
 							'subtype'   => 'text',
 							'id'    => 'swissfloorball_api_key',
 							'name'      => 'swissfloorball_api_key',
-							'required' => 'true',
+							'required' => 'false',
 							'get_options_list' => '',
 							'value_type'=>'normal',
 							'wp_data' => 'option'
@@ -255,7 +378,8 @@ class Swiss_Floorball_Api_Admin {
 
 		register_setting(
 			'settings_page_general_settings',
-			'swissfloorball_api_key'
+			'swissfloorball_api_key',
+			'sanitize_text_field'
 		);
 
 		unset($args);
@@ -264,7 +388,7 @@ class Swiss_Floorball_Api_Admin {
 							'subtype'   => 'number',
 							'id'    => 'swissfloorball_club_number',
 							'name'      => 'swissfloorball_club_number',
-							'required' => 'true',
+							'required' => 'false',
 							'get_options_list' => '',
 							'value_type'=>'normal',
 							'wp_data' => 'option'
@@ -280,19 +404,21 @@ class Swiss_Floorball_Api_Admin {
 
 		register_setting(
 			'settings_page_general_settings',
-			'swissfloorball_club_number'
-			);
+			'swissfloorball_club_number',
+			array( $this, 'sanitize_club_number' )
+		);
 
 		unset($args);
 		$args = array (
 							'type'      => 'input',
-							'subtype'   => 'string',
+							'subtype'   => 'text',
 							'id'    => 'swissfloorball_club_name',
 							'name'      => 'swissfloorball_club_name',
-							'required' => 'true',
+							'required' => 'false',
 							'get_options_list' => '',
 							'value_type'=>'normal',
-							'wp_data' => 'option'
+							'wp_data' => 'option',
+							'disabled' => true
 					);
 		add_settings_field(
 			'swissfloorball_club_name',
@@ -303,18 +429,13 @@ class Swiss_Floorball_Api_Admin {
 			$args
 		);
 
-		register_setting(
-			'settings_page_general_settings',
-			'swissfloorball_club_name'
-			);
-
 		unset($args);
 		$args = array (
 							'type'      => 'input',
-							'subtype'   => 'integer',
+							'subtype'   => 'number',
 							'id'    => 'swissfloorball_actual_season',
 							'name'      => 'swissfloorball_actual_season',
-							'required' => 'true',
+							'required' => 'false',
 							'get_options_list' => '',
 							'value_type'=>'normal',
 							'wp_data' => 'option'
@@ -330,7 +451,8 @@ class Swiss_Floorball_Api_Admin {
 
 		register_setting(
 			'settings_page_general_settings', 
-			'swissfloorball_actual_season'
+			'swissfloorball_actual_season',
+			'absint'
 			);
 
 	}

@@ -1,4 +1,767 @@
 /**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
+ * Swiss Floorball API Public/Frontend Styles
+ * Modern, responsive design inspired by Swiss Unihockey
+ * Mobile-first approach with emphasis on responsiveness
  */
+
+/* Color Scheme - Swiss Unihockey Branding */
+:root {
+    --sfa-primary: #0066cc;
+    --sfa-primary-dark: #004c99;
+    --sfa-primary-light: #3385d6;
+    --sfa-secondary: #ff6600;
+    --sfa-secondary-dark: #cc5200;
+    --sfa-light-bg: #f8f9fa;
+    --sfa-border: #e0e0e0;
+    --sfa-text: #2c3e50;
+    --sfa-text-light: #7f8c8d;
+    --sfa-success: #27ae60;
+    --sfa-warning: #f39c12;
+    --sfa-danger: #e74c3c;
+}
+
+/* Reset and Base Styles */
+.swiss-floorball-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Responsive Typography */
+.swiss-floorball-container h1,
+.swiss-floorball-container h2,
+.swiss-floorball-container h3,
+.swiss-floorball-container h4,
+.swiss-floorball-container h5 {
+    color: var(--sfa-text);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.swiss-floorball-container h1 {
+    font-size: clamp(24px, 5vw, 32px);
+}
+
+.swiss-floorball-container h2 {
+    font-size: clamp(20px, 4vw, 26px);
+}
+
+.swiss-floorball-container h3 {
+    font-size: clamp(18px, 3.5vw, 22px);
+}
+
+.swiss-floorball-container h4 {
+    font-size: clamp(16px, 3vw, 20px);
+}
+
+.swiss-floorball-container h5 {
+    font-size: clamp(14px, 2.5vw, 18px);
+}
+
+/* Enhanced Card Styling - Fully Responsive */
+.card {
+    background: white;
+    border: 1px solid var(--sfa-border);
+    border-radius: 12px;
+    padding: clamp(16px, 3vw, 24px);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--sfa-primary) 0%, var(--sfa-secondary) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
+    transform: translateY(-4px);
+    border-color: var(--sfa-primary-light);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-body {
+    padding: clamp(12px, 2vw, 20px);
+}
+
+.card-title {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 600;
+    color: var(--sfa-text);
+    margin-bottom: 12px;
+}
+
+.card-text {
+    font-size: clamp(13px, 2.5vw, 15px);
+    color: var(--sfa-text-light);
+    line-height: 1.6;
+}
+
+/* Responsive Tables - Mobile First */
+.table,
+.sfa-data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--sfa-border);
+    margin-bottom: 20px;
+}
+
+.table thead,
+.sfa-data-table thead {
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.table th,
+.sfa-data-table th {
+    padding: clamp(10px, 2vw, 16px);
+    text-align: left;
+    font-weight: 600;
+    color: var(--sfa-text);
+    font-size: clamp(11px, 2vw, 13px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--sfa-primary);
+}
+
+.table td,
+.sfa-data-table td {
+    padding: clamp(10px, 2vw, 16px);
+    border-bottom: 1px solid var(--sfa-light-bg);
+    color: var(--sfa-text);
+    font-size: clamp(12px, 2.2vw, 14px);
+}
+
+.table tbody tr,
+.sfa-data-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover,
+.sfa-data-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(0, 102, 204, 0.03) 0%, transparent 100%);
+}
+
+.table tbody tr:nth-child(even),
+.sfa-data-table tbody tr:nth-child(even) {
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.table tbody tr:last-child td,
+.sfa-data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Mobile Table - Stack on Small Screens */
+@media screen and (max-width: 768px) {
+
+    .table,
+    .sfa-data-table {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .table thead,
+    .sfa-data-table thead {
+        display: none;
+    }
+
+    .table tbody tr,
+    .sfa-data-table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid var(--sfa-border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .table tbody tr:hover,
+    .sfa-data-table tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 102, 204, 0.12);
+    }
+
+    .table tbody tr:nth-child(even),
+    .sfa-data-table tbody tr:nth-child(even) {
+        background: white;
+    }
+
+    .table td,
+    .sfa-data-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+        min-height: 44px;
+    }
+
+    .table td:first-child,
+    .sfa-data-table td:first-child {
+        background: linear-gradient(90deg, rgba(0, 102, 204, 0.05) 0%, transparent 100%);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        font-weight: 600;
+    }
+
+    .table td:last-child,
+    .sfa-data-table td:last-child {
+        border-bottom: none;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    .table td::before,
+    .sfa-data-table td::before {
+        content: attr(data-label);
+        flex: 0 0 auto;
+        font-weight: 600;
+        color: var(--sfa-text);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        margin-right: 16px;
+    }
+
+    /* Add subtle gradient to alternating cells */
+    .table td:nth-child(odd),
+    .sfa-data-table td:nth-child(odd) {
+        background: rgba(248, 249, 250, 0.3);
+    }
+}
+
+/* Responsive Grid for Cards */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(12px, 3vw, 20px);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -12px;
+}
+
+.col,
+.col-6,
+.col-sm-6,
+.col-md-4,
+.col-lg-3 {
+    padding: 0 12px;
+    margin-bottom: 20px;
+}
+
+/* Mobile First Column Sizing */
+.col {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+/* Tablet */
+@media screen and (min-width: 576px) {
+    .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+/* Responsive Images */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.rounded-start {
+    border-radius: 8px;
+}
+
+/* Button Styling - Fully Responsive */
+.button,
+.btn {
+    display: inline-block;
+    padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px);
+    background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: clamp(13px, 2.5vw, 15px);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    text-align: center;
+}
+
+.button:hover,
+.btn:hover {
+    background: linear-gradient(135deg, var(--sfa-primary-dark) 0%, var(--sfa-primary) 100%);
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Text Utilities - Responsive */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Margin/Padding Utilities */
+.mb-3 {
+    margin-bottom: clamp(16px, 3vw, 24px);
+}
+
+.mt-3 {
+    margin-top: clamp(16px, 3vw, 24px);
+}
+
+.p-3 {
+    padding: clamp(16px, 3vw, 24px);
+}
+
+/* Game Score Display - Enhanced & Responsive */
+.game-score-card {
+    background: white;
+    border: 1px solid var(--sfa-border);
+    border-radius: 12px;
+    padding: clamp(16px, 3vw, 24px);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.game-score-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
+    transform: translateY(-4px);
+}
+
+.game-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(8px, 2vw, 12px);
+}
+
+.game-team img {
+    max-width: clamp(40px, 10vw, 80px);
+    height: auto;
+}
+
+.game-score {
+    font-size: clamp(24px, 6vw, 36px);
+    font-weight: 700;
+    color: var(--sfa-primary);
+}
+
+.game-info {
+    text-align: center;
+    padding: clamp(12px, 2vw, 16px);
+}
+
+.game-info p {
+    margin: clamp(4px, 1vw, 8px) 0;
+    font-size: clamp(12px, 2.5vw, 14px);
+    color: var(--sfa-text-light);
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: clamp(30px, 5vw, 50px);
+    color: var(--sfa-text-light);
+}
+
+.loading::before {
+    content: "";
+    display: inline-block;
+    width: clamp(30px, 6vw, 40px);
+    height: clamp(30px, 6vw, 40px);
+    border: 4px solid var(--sfa-light-bg);
+    border-top-color: var(--sfa-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: clamp(40px, 8vw, 70px) clamp(16px, 3vw, 24px);
+    color: var(--sfa-text-light);
+    background: var(--sfa-light-bg);
+    border-radius: 12px;
+    border: 2px dashed var(--sfa-border);
+}
+
+.empty-state-icon {
+    font-size: clamp(40px, 8vw, 56px);
+    margin-bottom: clamp(12px, 2vw, 16px);
+    opacity: 0.4;
+}
+
+.empty-state-text {
+    font-size: clamp(14px, 3vw, 16px);
+    font-weight: 500;
+}
+
+/* Tablet Optimizations */
+@media screen and (min-width: 576px) and (max-width: 991px) {
+    .swiss-floorball-container {
+        padding: 24px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}
+
+/* Desktop Optimizations */
+@media screen and (min-width: 992px) {
+    .swiss-floorball-container {
+        padding: 30px;
+    }
+
+    .row {
+        margin: 0 -16px;
+    }
+
+    .col,
+    .col-6,
+    .col-sm-6,
+    .col-md-4,
+    .col-lg-3 {
+        padding: 0 16px;
+    }
+}
+
+/* Print Styles */
+@media print {
+
+    .card,
+    .table {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .card:hover,
+    .table tbody tr:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+
+    .card,
+    .table {
+        border-width: 2px;
+    }
+
+    .button,
+    .btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --sfa-light-bg: #2c3e50;
+        --sfa-border: #34495e;
+        --sfa-text: #ecf0f1;
+        --sfa-text-light: #bdc3c7;
+    }
+
+    .card,
+    .table {
+        background: #34495e;
+    }
+
+    .table thead {
+        background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    }
+}
+
+/* Additional Mobile Enhancements */
+@media screen and (max-width: 768px) {
+
+    /* Improve touch targets */
+    .table td,
+    .sfa-data-table td,
+    .button,
+    .btn {
+        min-height: 44px;
+    }
+
+    /* Add breathing room */
+    .swiss-floorball-container {
+        padding: 16px;
+    }
+
+    /* Optimize card spacing */
+    .card {
+        margin-bottom: 16px;
+    }
+
+    /* Make headings more compact */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin-bottom: 12px;
+    }
+
+    /* Improve table card appearance with premium styling */
+    .table tbody tr,
+    .sfa-data-table tbody tr {
+        position: relative;
+        padding-left: 8px;
+    }
+
+    .table tbody tr::after,
+    .sfa-data-table tbody tr::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--sfa-primary) 0%, var(--sfa-secondary) 100%);
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        opacity: 0.6;
+    }
+
+    /* Enhanced data value styling */
+    .table td,
+    .sfa-data-table td {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    /* Make first cell (usually rank/ID) stand out more */
+    .table td:first-child,
+    .sfa-data-table td:first-child {
+        font-size: 16px;
+        color: var(--sfa-primary);
+    }
+
+    /* Add subtle animation on scroll */
+    .table tbody tr,
+    .sfa-data-table tbody tr {
+        animation: fadeInUp 0.3s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Better spacing for table sections */
+    .sfa-table-container {
+        margin-bottom: 24px;
+    }
+
+    /* Improve heading hierarchy */
+    .sfa-table-container h2,
+    .sfa-table-container h3 {
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--sfa-primary);
+        margin-bottom: 16px;
+    }
+
+    /* Make labels more prominent */
+    .table td::before,
+    .sfa-data-table td::before {
+        color: var(--sfa-primary-dark);
+        font-weight: 700;
+    }
+
+    /* Add subtle pulse on active/focused elements */
+    .table tbody tr:active,
+    .sfa-data-table tbody tr:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    /* Improve calendar link styling */
+    .sfa-calendar-link {
+        display: block;
+        padding: 12px 16px;
+        background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%);
+        color: white !important;
+        text-align: center;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .sfa-calendar-link:hover,
+    .sfa-calendar-link:active {
+        box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+        transform: translateY(-2px);
+    }
+
+    /* Better empty state on mobile */
+    .empty-state {
+        padding: 32px 16px;
+    }
+
+    /* Optimize images in tables */
+    .table img,
+    .sfa-data-table img {
+        max-width: 24px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    /* Add visual feedback for interactive elements */
+    .table a,
+    .sfa-data-table a {
+        color: var(--sfa-primary);
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.2s ease;
+    }
+
+    .table a:hover,
+    .sfa-data-table a:hover {
+        border-bottom-color: var(--sfa-primary);
+    }
+
+    /* Improve card layout for game scores */
+    .card .row {
+        gap: 12px;
+    }
+
+    /* Better button styling on mobile */
+    .button,
+    .btn {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    /* Add safe area padding for notched devices */
+    .swiss-floorball-container {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Smooth scroll for better UX */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+a:focus,
+button:focus,
+.btn:focus {
+    outline: 2px solid var(--sfa-primary);
+    outline-offset: 2px;
+}
+
+/* Prevent text selection on interactive elements for better mobile feel */
+@media screen and (max-width: 768px) {
+
+    .table tbody tr,
+    .sfa-data-table tbody tr,
+    .button,
+    .btn {
+        -webkit-tap-highlight-color: rgba(0, 102, 204, 0.1);
+        user-select: none;
+    }
+
+    /* Allow text selection in data cells */
+    .table td,
+    .sfa-data-table td {
+        user-select: text;
+    }
+}

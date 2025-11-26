@@ -11,6 +11,10 @@
  * @package    Swiss_Floorball_Api
  * @subpackage Swiss_Floorball_Api/public/partials
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

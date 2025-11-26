@@ -1,16 +1,71 @@
 /**
  * Swiss Floorball API Admin Styles
+ * Inspired by modern sports websites like Swiss Unihockey
  */
 
 /* Color Scheme - Swiss Unihockey Branding */
 :root {
     --sfa-primary: #0066cc;
     --sfa-primary-dark: #004c99;
+    --sfa-primary-light: #3385d6;
     --sfa-secondary: #ff6600;
+    --sfa-secondary-dark: #cc5200;
     --sfa-light-bg: #f8f9fa;
-    --sfa-border: #ddd;
-    --sfa-text: #333;
-    --sfa-text-light: #666;
+    --sfa-border: #e0e0e0;
+    --sfa-text: #2c3e50;
+    --sfa-text-light: #7f8c8d;
+    --sfa-success: #27ae60;
+    --sfa-warning: #f39c12;
+    --sfa-danger: #e74c3c;
+}
+
+/* WordPress Admin Notices - Fix white text on white background */
+.notice,
+.updated,
+.error,
+.settings-error {
+    background: white !important;
+    border-left: 4px solid #00a0d2 !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04) !important;
+    margin: 15px 0 !important;
+    padding: 12px !important;
+}
+
+.notice p,
+.updated p,
+.error p,
+.settings-error p {
+    margin: 0.5em 0 !important;
+    padding: 2px !important;
+    color: #2c3e50 !important;
+    font-size: 14px !important;
+}
+
+.notice.notice-success,
+.updated {
+    border-left-color: var(--sfa-success) !important;
+}
+
+.notice.notice-error,
+.error {
+    border-left-color: var(--sfa-danger) !important;
+}
+
+.notice.notice-warning {
+    border-left-color: var(--sfa-warning) !important;
+}
+
+.notice.notice-info {
+    border-left-color: var(--sfa-primary) !important;
+}
+
+.notice-dismiss {
+    color: #2c3e50 !important;
+}
+
+.notice-dismiss:hover,
+.notice-dismiss:focus {
+    color: var(--sfa-danger) !important;
 }
 
 /* Main Container */
@@ -19,64 +74,126 @@
     margin: 20px 0;
 }
 
-/* Header */
+/* Header with Gradient */
 .sfa-admin-header {
     background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%);
     color: white;
-    padding: 30px;
-    border-radius: 8px;
+    padding: 40px;
+    border-radius: 12px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 102, 204, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.sfa-admin-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
 }
 
 .sfa-admin-header h1 {
     margin: 0;
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 700;
     color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .sfa-admin-header p {
     margin: 10px 0 0 0;
-    opacity: 0.9;
-    font-size: 14px;
+    opacity: 0.95;
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
 }
 
-/* Card Layout */
+/* Enhanced Card Layout */
 .sfa-cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
     margin-bottom: 30px;
 }
 
 .sfa-card {
     background: white;
     border: 1px solid var(--sfa-border);
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.3s ease;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.sfa-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--sfa-primary) 0%, var(--sfa-secondary) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .sfa-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
+    transform: translateY(-4px);
+    border-color: var(--sfa-primary-light);
+}
+
+.sfa-card:hover::before {
+    opacity: 1;
 }
 
 .sfa-card h3 {
-    margin: 0 0 15px 0;
-    font-size: 18px;
-    color: var(--sfa-primary);
+    margin: 0 0 20px 0;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--sfa-text);
     border-bottom: 2px solid var(--sfa-light-bg);
-    padding-bottom: 10px;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
 }
 
-.sfa-card-icon {
+.sfa-card h3::before {
+    content: attr(data-icon);
+    margin-right: 10px;
+    font-size: 22px;
+}
+
+/* Quick Access Buttons */
+.sfa-card .button {
     display: inline-block;
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px;
+    margin: 6px 0;
+    border-radius: 6px;
+    background: var(--sfa-light-bg);
+    color: var(--sfa-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.sfa-card .button:hover {
+    background: var(--sfa-primary);
+    color: white;
+    border-color: var(--sfa-primary-dark);
+    transform: translateX(4px);
 }
 
 /* Settings Table */
@@ -87,21 +204,26 @@
 
 .sfa-settings-table tr {
     border-bottom: 1px solid var(--sfa-light-bg);
+    transition: background 0.2s ease;
 }
 
 .sfa-settings-table tr:last-child {
     border-bottom: none;
 }
 
+.sfa-settings-table tr:hover {
+    background: rgba(0, 102, 204, 0.02);
+}
+
 .sfa-settings-table td {
-    padding: 12px 0;
+    padding: 14px 0;
     font-size: 14px;
 }
 
 .sfa-settings-table td:first-child {
     color: var(--sfa-text-light);
     font-weight: 500;
-    width: 40%;
+    width: 45%;
 }
 
 .sfa-settings-table td:last-child {
@@ -109,209 +231,311 @@
     font-weight: 600;
 }
 
-/* Data Tables */
+/* Enhanced Data Tables */
 .sfa-data-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     background: white;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--sfa-border);
 }
 
 .sfa-data-table thead {
-    background: var(--sfa-light-bg);
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .sfa-data-table th {
-    padding: 15px;
+    padding: 16px 18px;
     text-align: left;
     font-weight: 600;
     color: var(--sfa-text);
     font-size: 13px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid var(--sfa-border);
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--sfa-primary);
 }
 
 .sfa-data-table td {
-    padding: 15px;
+    padding: 16px 18px;
     border-bottom: 1px solid var(--sfa-light-bg);
     color: var(--sfa-text);
+    font-size: 14px;
+}
+
+.sfa-data-table tbody tr {
+    transition: all 0.2s ease;
 }
 
 .sfa-data-table tbody tr:hover {
-    background: var(--sfa-light-bg);
+    background: linear-gradient(90deg, rgba(0, 102, 204, 0.03) 0%, transparent 100%);
+    transform: scale(1.01);
 }
 
 .sfa-data-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* Full Width Table Container */
+/* Striped rows for better readability */
+.sfa-data-table tbody tr:nth-child(even) {
+    background: rgba(248, 249, 250, 0.5);
+}
+
+/* Table Container with Enhanced Shadow */
 .sfa-table-container {
     background: white;
     border: 1px solid var(--sfa-border);
-    border-radius: 8px;
-    padding: 25px;
+    border-radius: 12px;
+    padding: 30px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .sfa-table-container h2 {
-    margin: 0 0 20px 0;
-    font-size: 20px;
+    margin: 0 0 24px 0;
+    font-size: 22px;
+    font-weight: 600;
     color: var(--sfa-primary);
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--sfa-light-bg);
 }
 
 /* Form Styling */
 .sfa-form-section {
     background: white;
     border: 1px solid var(--sfa-border);
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .sfa-form-section h2 {
-    margin: 0 0 20px 0;
-    font-size: 20px;
+    margin: 0 0 24px 0;
+    font-size: 22px;
+    font-weight: 600;
     color: var(--sfa-primary);
-    border-bottom: 2px solid var(--sfa-light-bg);
-    padding-bottom: 10px;
+    border-bottom: 3px solid var(--sfa-light-bg);
+    padding-bottom: 12px;
 }
 
 .form-table th {
-    padding: 15px 10px 15px 0;
+    padding: 16px 12px 16px 0;
     font-weight: 600;
     color: var(--sfa-text);
 }
 
 .form-table td {
-    padding: 15px 10px;
+    padding: 16px 12px;
 }
 
 .form-table input[type="text"],
 .form-table input[type="number"] {
     width: 100%;
-    max-width: 400px;
-    padding: 8px 12px;
-    border: 1px solid var(--sfa-border);
-    border-radius: 4px;
+    max-width: 450px;
+    padding: 10px 14px;
+    border: 2px solid var(--sfa-border);
+    border-radius: 6px;
     font-size: 14px;
+    transition: all 0.2s ease;
 }
 
 .form-table input[type="text"]:focus,
 .form-table input[type="number"]:focus {
     border-color: var(--sfa-primary);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
 }
 
-/* Submit Button */
+/* Enhanced Submit Button */
 .button-primary {
-    background: var(--sfa-primary) !important;
-    border-color: var(--sfa-primary-dark) !important;
+    background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%) !important;
+    border: none !important;
     text-shadow: none !important;
-    box-shadow: none !important;
-    padding: 10px 20px !important;
-    font-size: 14px !important;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3) !important;
+    padding: 12px 28px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
 }
 
 .button-primary:hover {
-    background: var(--sfa-primary-dark) !important;
-    border-color: var(--sfa-primary-dark) !important;
+    background: linear-gradient(135deg, var(--sfa-primary-dark) 0%, var(--sfa-primary) 100%) !important;
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4) !important;
+    transform: translateY(-2px) !important;
 }
 
 /* Badge/Pill Styling */
 .sfa-badge {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 6px 14px;
     background: var(--sfa-light-bg);
-    border-radius: 12px;
+    border-radius: 16px;
     font-size: 12px;
     font-weight: 600;
     color: var(--sfa-text);
+    border: 1px solid var(--sfa-border);
 }
 
 .sfa-badge-primary {
-    background: var(--sfa-primary);
+    background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%);
     color: white;
+    border: none;
 }
 
 .sfa-badge-secondary {
-    background: var(--sfa-secondary);
+    background: linear-gradient(135deg, var(--sfa-secondary) 0%, var(--sfa-secondary-dark) 100%);
     color: white;
+    border: none;
+}
+
+.sfa-badge-success {
+    background: var(--sfa-success);
+    color: white;
+    border: none;
 }
 
 /* Helper Text */
 .sfa-helper-text {
     color: var(--sfa-text-light);
     font-size: 13px;
-    margin-top: 5px;
+    margin-top: 6px;
     font-style: italic;
+    line-height: 1.5;
 }
 
 /* Responsive Design */
 @media screen and (max-width: 782px) {
     .sfa-cards-container {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
-    
+
     .sfa-admin-header {
-        padding: 20px;
+        padding: 24px;
     }
-    
+
     .sfa-admin-header h1 {
-        font-size: 22px;
+        font-size: 24px;
     }
-    
+
     .sfa-data-table {
         font-size: 13px;
     }
-    
+
     .sfa-data-table th,
     .sfa-data-table td {
-        padding: 10px;
+        padding: 12px;
+    }
+
+    .sfa-table-container,
+    .sfa-form-section {
+        padding: 20px;
     }
 }
 
 /* Loading State */
 .sfa-loading {
     text-align: center;
-    padding: 40px;
+    padding: 50px;
     color: var(--sfa-text-light);
 }
 
 .sfa-loading::before {
     content: "";
     display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 3px solid var(--sfa-light-bg);
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--sfa-light-bg);
     border-top-color: var(--sfa-primary);
     border-radius: 50%;
-    animation: sfa-spin 1s linear infinite;
+    animation: sfa-spin 0.8s linear infinite;
 }
 
 @keyframes sfa-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Empty State */
 .sfa-empty-state {
     text-align: center;
-    padding: 60px 20px;
+    padding: 70px 24px;
     color: var(--sfa-text-light);
+    background: var(--sfa-light-bg);
+    border-radius: 12px;
+    border: 2px dashed var(--sfa-border);
 }
 
 .sfa-empty-state-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-    opacity: 0.3;
+    font-size: 56px;
+    margin-bottom: 16px;
+    opacity: 0.4;
 }
 
 .sfa-empty-state-text {
     font-size: 16px;
+    font-weight: 500;
+}
+
+/* Stat Cards */
+.sfa-stat-card {
+    background: linear-gradient(135deg, white 0%, var(--sfa-light-bg) 100%);
+    border: 1px solid var(--sfa-border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.sfa-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.sfa-stat-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--sfa-primary);
+    margin: 8px 0;
+}
+
+.sfa-stat-label {
+    font-size: 13px;
+    color: var(--sfa-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+/* Search Container */
+.sfa-search-container {
+    margin-bottom: 24px;
+}
+
+.sfa-search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 18px;
+    font-size: 15px;
+    border: 2px solid var(--sfa-border);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--sfa-text);
+}
+
+.sfa-search-input:focus {
+    outline: none;
+    border-color: var(--sfa-primary);
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.sfa-search-input::placeholder {
+    color: var(--sfa-text-light);
+    opacity: 0.7;
 }

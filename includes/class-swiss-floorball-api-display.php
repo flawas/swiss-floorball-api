@@ -10,6 +10,10 @@
  * @subpackage Swiss_Floorball_Api/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class to handle HTML display of API data.
  *
@@ -61,6 +65,7 @@ class Swiss_Floorball_API_Display {
 		$rows = $api_response['data']['regions'][0]['rows'];
 		$team_count = count( $rows );
 		$title = isset( $api_response['data']['title'] ) ? $api_response['data']['title'] : '';
+		$current_season = get_option('swissfloorball_actual_season', date('Y'));
 
 		?>
 		<h2 style="margin: 0 0 20px 0; font-size: 20px; color: #0066cc;"><?php echo esc_html( $title ); ?></h2>
@@ -72,15 +77,43 @@ class Swiss_Floorball_API_Display {
 					<th><?php esc_html_e( 'Team ID', 'swiss-floorball-api' ); ?></th>
 					<th><?php esc_html_e( 'Team Name', 'swiss-floorball-api' ); ?></th>
 					<th><?php esc_html_e( 'Meisterschaft', 'swiss-floorball-api' ); ?></th>
+					<th><?php esc_html_e( 'League ID', 'swiss-floorball-api' ); ?></th>
+					<th><?php esc_html_e( 'Game Class ID', 'swiss-floorball-api' ); ?></th>
+					<th><?php esc_html_e( 'Group ID', 'swiss-floorball-api' ); ?></th>
 					<th><?php esc_html_e( 'Cup', 'swiss-floorball-api' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ( $rows as $row ) : ?>
+				<?php foreach ( $rows as $row ) : 
+					$team_id = $row['team_id'];
+					$league_id = '-';
+					$game_class_id = '-';
+					$group_id = '-';
+					
+					// Fetch team games to get league/game_class/group IDs
+					$games_response = $client->fetch_data( 'games', array(
+						'mode' => 'team',
+						'team_id' => $team_id,
+						'season' => $current_season,
+					) );
+					
+					if ( ! is_wp_error( $games_response ) && isset( $games_response['data']['tabs'][0]['link']['ids'] ) ) {
+						$ids = $games_response['data']['tabs'][0]['link']['ids'];
+						// IDs format: [season, league, game_class, group]
+						if ( count( $ids ) >= 4 ) {
+							$league_id = $ids[1];
+							$game_class_id = $ids[2];
+							$group_id = $ids[3];
+						}
+					}
+				?>
 					<tr>
-						<td><?php echo esc_html( $row['team_id'] ); ?></td>
+						<td><?php echo esc_html( $team_id ); ?></td>
 						<td><?php echo esc_html( $row['cells'][0]['text'][0] ); ?></td>
 						<td><?php echo esc_html( $row['cells'][1]['text'][0] ); ?></td>
+						<td><?php echo esc_html( $league_id ); ?></td>
+						<td><?php echo esc_html( $game_class_id ); ?></td>
+						<td><?php echo esc_html( $group_id ); ?></td>
 						<td><?php echo esc_html( $row['cells'][2]['text'][0] ); ?></td>
 					</tr>
 				<?php endforeach; ?>
@@ -409,18 +442,32 @@ class Swiss_Floorball_API_Display {
 	 * @return void
 	 */
 	public static function render_calendars( $team_id = null, $club_id = null, $season = null, $league = null, $game_class = null, $group = null ) {
+		// 1. Construct ICS Link URL (keep existing logic)
 		$url = 'https://api-v2.swissunihockey.ch/api/calendars?';
 		$params = array();
 
+		// Determine mode for games API
+		$games_params = array();
+		$mode = '';
+
 		if ( $team_id ) {
 			$params['team_id'] = $team_id;
+			$mode = 'team';
+			$games_params['team_id'] = $team_id;
 		} elseif ( $club_id ) {
 			$params['club_id'] = $club_id;
+			$mode = 'club';
+			$games_params['club_id'] = $club_id;
 		} elseif ( $season && $league && $game_class && $group ) {
 			$params['season']     = $season;
 			$params['league']     = $league;
 			$params['game_class'] = $game_class;
 			$params['group']      = $group;
+			$mode = 'group'; // Assuming group mode exists or fallback to filtering? API docs for 'games' usually support team/club. Let's try to infer or use what we have.
+            // If specific group params are passed, we might not be able to fetch "games" easily without a specific mode if the API doesn't support it directly for groups in the same way.
+            // However, the user request specifically mentioned team_id example.
+            // Let's assume for now we try to fetch games if we have a team or club.
+            // If we only have group params, we might need a different endpoint or strategy, but let's focus on team/club first as per request.
 		} else {
 			echo '<p>' . esc_html__( 'Fehlende Parameter für Kalender.', 'swiss-floorball-api' ) . '</p>';
 			return;
@@ -428,8 +475,122 @@ class Swiss_Floorball_API_Display {
 
 		$url = add_query_arg( $params, 'https://api-v2.swissunihockey.ch/api/calendars' );
 
+        // 2. Fetch Games if possible
+        if ( ! empty( $mode ) ) {
+            $games_params['mode'] = $mode;
+            // If season is not set in params but needed for games, we might need to default it.
+            // The shortcode might not pass season. If not, we should probably use the current season option.
+            if ( empty( $season ) ) {
+                 $season = get_option('swissfloorball_actual_season');
+            }
+            $games_params['season'] = $season;
+
+            // If we are in group mode (custom params), we might need to pass them to games endpoint if supported,
+            // or we might skip games display if not supported.
+            // For now, let's proceed with team/club which are the main use cases.
+            
+            $client = self::get_client();
+            $api_response = $client->fetch_data( 'games', $games_params );
+
+            if ( ! is_wp_error( $api_response ) && isset( $api_response['data']['regions'][0]['rows'] ) ) {
+                $rows = $api_response['data']['regions'][0]['rows'];
+                
+                // Filter for upcoming games
+                $upcoming_games = array();
+                $now = current_time( 'timestamp' ); // Use WP time
+
+                foreach ( $rows as $row ) {
+                    $date_str = $row['cells'][0]['text'][0]; // e.g. "26.11.2025"
+                    $time_str = $row['cells'][0]['text'][1]; // e.g. "20:00"
+                    
+                    // Parse date
+                    $dt = DateTime::createFromFormat( 'd.m.Y H:i', $date_str . ' ' . $time_str );
+                    if ( $dt && $dt->getTimestamp() >= $now ) {
+                        $upcoming_games[] = $row;
+                    }
+                }
+
+                // Render Table if we have upcoming games
+                if ( ! empty( $upcoming_games ) ) {
+                    ?>
+                    <h3 class="sfa-calendar-title"><?php esc_html_e( 'Nächste Spiele', 'swiss-floorball-api' ); ?></h3>
+                    <table class="sfa-data-table sfa-calendar-table">
+                        <thead>
+                            <tr>
+                                <th><?php esc_html_e( 'Datum', 'swiss-floorball-api' ); ?></th>
+                                <th><?php esc_html_e( 'Heim', 'swiss-floorball-api' ); ?></th>
+                                <th><?php esc_html_e( 'Gast', 'swiss-floorball-api' ); ?></th>
+                                <th><?php esc_html_e( 'Ort', 'swiss-floorball-api' ); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ( $upcoming_games as $game ) : 
+                                $date           = $game['cells'][0]['text'][0];
+                                $time           = $game['cells'][0]['text'][1];
+                                $place_location = $game['cells'][1]['text'][0];
+                                $place_name     = $game['cells'][1]['text'][1]; // Sometimes location is split
+                                
+                                // Fetch game details for logos
+                                $game_id = isset( $game['link']['ids'][0] ) ? $game['link']['ids'][0] : '';
+                                $logo_home = '';
+                                $logo_away = '';
+                                $team_home = '';
+                                $team_away = '';
+
+                                if ( $game_id ) {
+                                    $details = self::get_gamedetails( $game_id );
+                                    if ( $details ) {
+                                        $team_home = $details[2];
+                                        $logo_home = $details[3];
+                                        $team_away = $details[4];
+                                        $logo_away = $details[5];
+                                    }
+                                }
+
+                                // Fallback if details fail or no ID (though unlikely for valid games)
+                                if ( empty( $team_home ) ) {
+                                    if ( $mode === 'club' ) {
+                                         $team_home = $game['cells'][3]['text'][0];
+                                         $team_away = $game['cells'][4]['text'][0];
+                                    } else {
+                                         $team_home = $game['cells'][2]['text'][0];
+                                         $team_away = $game['cells'][3]['text'][0];
+                                    }
+                                }
+
+                                ?>
+                                <tr>
+                                    <td data-label="<?php esc_attr_e( 'Datum', 'swiss-floorball-api' ); ?>"><?php echo esc_html( $date . ' ' . $time ); ?></td>
+                                    <td data-label="<?php esc_attr_e( 'Heim', 'swiss-floorball-api' ); ?>">
+                                        <?php if ( $logo_home ) : ?>
+                                            <img src="<?php echo esc_url( $logo_home ); ?>" alt="<?php echo esc_attr( $team_home ); ?>" style="height: 20px; vertical-align: middle; margin-right: 5px;">
+                                        <?php endif; ?>
+                                        <?php echo esc_html( $team_home ); ?>
+                                    </td>
+                                    <td data-label="<?php esc_attr_e( 'Gast', 'swiss-floorball-api' ); ?>">
+                                        <?php if ( $logo_away ) : ?>
+                                            <img src="<?php echo esc_url( $logo_away ); ?>" alt="<?php echo esc_attr( $team_away ); ?>" style="height: 20px; vertical-align: middle; margin-right: 5px;">
+                                        <?php endif; ?>
+                                        <?php echo esc_html( $team_away ); ?>
+                                    </td>
+                                    <td data-label="<?php esc_attr_e( 'Ort', 'swiss-floorball-api' ); ?>"><?php echo esc_html( $place_location ); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php
+                } else {
+                     echo '<p>' . esc_html__( 'Keine kommenden Spiele gefunden.', 'swiss-floorball-api' ) . '</p>';
+                }
+            }
+        }
+
 		?>
-		<p><a href="<?php echo esc_url( $url ); ?>" class="button"><?php esc_html_e( 'Kalender abonnieren (ICS)', 'swiss-floorball-api' ); ?></a></p>
+		<div class="sfa-calendar-link" style="margin-top: 10px; font-size: 0.9em;">
+            <a href="<?php echo esc_url( $url ); ?>" target="_blank" style="text-decoration: underline; color: #666;">
+                <?php esc_html_e( 'Kalender abonnieren (ICS)', 'swiss-floorball-api' ); ?>
+            </a>
+        </div>
 		<?php
 	}
 
@@ -792,13 +953,13 @@ class Swiss_Floorball_API_Display {
 					$rank   = isset( $row['cells'][0]['text'][0] ) ? $row['cells'][0]['text'][0] : '';
 					$team   = isset( $row['cells'][1]['text'][0] ) ? $row['cells'][1]['text'][0] : '';
 					$games  = isset( $row['cells'][2]['text'][0] ) ? $row['cells'][2]['text'][0] : '';
-					$points = isset( $row['cells'][6]['text'][0] ) ? $row['cells'][6]['text'][0] : '';
+					$points = isset( $row['cells'][12]['text'][0] ) ? $row['cells'][12]['text'][0] : '';
 					?>
 					<tr>
-						<td><?php echo esc_html( $rank ); ?></td>
-						<td><?php echo esc_html( $team ); ?></td>
-						<td><?php echo esc_html( $games ); ?></td>
-						<td><?php echo esc_html( $points ); ?></td>
+						<td data-label="<?php esc_attr_e( 'Rang', 'swiss-floorball-api' ); ?>"><?php echo esc_html( $rank ); ?></td>
+						<td data-label="<?php esc_attr_e( 'Team', 'swiss-floorball-api' ); ?>"><?php echo esc_html( $team ); ?></td>
+						<td data-label="<?php esc_attr_e( 'Spiele', 'swiss-floorball-api' ); ?>"><?php echo esc_html( $games ); ?></td>
+						<td data-label="<?php esc_attr_e( 'Punkte', 'swiss-floorball-api' ); ?>"><?php echo esc_html( $points ); ?></td>
 					</tr>
 					<?php
 				}
