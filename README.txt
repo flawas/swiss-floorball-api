@@ -6,71 +6,91 @@ Requires at least: 5.0
 Tested up to: 6.4
 Stable tag: 1.0.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display Swiss Floorball (Swiss Unihockey) data like games, rankings, and players on your WordPress site using the official API v2.
+The **Swiss Floorball API** plugin brings the power of the Swiss Unihockey API v2 to your WordPress site. Display games, rankings, team rosters, and player statistics with ease using simple shortcodes.
 
-== Description ==
+== 🚀 Features ==
 
-The **Swiss Floorball API** plugin allows you to easily integrate data from Swiss Unihockey into your WordPress website. Whether you are a club wanting to display your teams' schedules and rankings, or a fan site tracking the league, this plugin provides a comprehensive set of shortcodes to display real-time data.
+*   **🔌 Plug & Play:** Configure your Club ID once and get instant access to your club's data.
+*   **📅 Calendars:** Display upcoming games for teams or entire clubs. Includes **ICS subscription links** for users to add games to their personal calendars.
+*   **🏆 Rankings:** Always up-to-date league tables for any group or league.
+*   **📊 Statistics:** Show topscorer lists and detailed game events.
+*   **📱 Responsive:** Built-in responsive tables that look great on mobile devices.
+*   **👤 Player Profiles:** Showcase individual player stats and national team members.
 
-**Features:**
+== 🛠 Installation ==
 
-*   **Club Integration:** Set your Club ID once and automatically display all your club's teams and games.
-*   **Calendars:** Show upcoming games for specific teams, clubs, or leagues with ICS subscription links.
-*   **Rankings:** Display current league tables for any group.
-*   **Game Details:** Show detailed game events and summaries.
-*   **Player Stats:** Display individual player profiles and national team players.
-*   **Topscorers:** Show lists of top scorers for a league.
-*   **Responsive Design:** Data tables are styled to be responsive and look good on mobile devices.
-
-== Installation ==
-
-1.  Upload the `swiss-floorball-api` folder to the `/wp-content/plugins/` directory.
-2.  Activate the plugin through the 'Plugins' menu in WordPress.
-3.  Go to **Settings > Swiss Floorball API** in your WordPress admin panel.
+1.  Download the plugin and upload the `swiss-floorball-api` folder to your `/wp-content/plugins/` directory.
+2.  Activate the plugin through the **Plugins** menu in WordPress.
+3.  Navigate to **Settings > Swiss Floorball API**.
 4.  Enter your **Club ID** (e.g., `427892`) and the **Current Season** (e.g., `2025`).
-5.  Save changes.
+5.  Click **Save Changes**.
 
-== Frequently Asked Questions ==
+![Settings Page](assets/screenshot-1.png)
+*Configure your Club ID and Season in the settings.*
 
-= Where do I find my Club ID? =
-You can find your Club ID on the Swiss Unihockey website or by using the `[suh-clubs]` shortcode to list all clubs and their IDs.
+== 📝 Shortcodes ==
 
-= How do I display a specific team's calendar? =
-Use the shortcode `[suh-calendars team_id="12345"]`. You can find the Team ID in the URL of the team's page on the Swiss Unihockey website or via the API.
+Use these shortcodes in any Page or Post to display data.
 
-= Can I customize the look? =
-Yes, the plugin includes a basic stylesheet, but you can override the CSS classes (prefixed with `.sfa-`) in your theme's custom CSS.
+= Club & Team Data =
 
-== Screenshots ==
+| Shortcode | Description | Attributes |
+|-----------|-------------|------------|
+| `[suh-club-teams]` | List all teams in your club. | None |
+| `[suh-club-games]` | List all games for your club this season. | None |
+| `[suh-team-games]` | List games for a specific team. | `team_id` |
+| `[suh-calendars]` | Show upcoming games + ICS link. | `team_id`, `club_id` |
 
-1.  **Plugin Settings**: Configure your Club ID and the current season.
-2.  **Club Games**: Example of the `[suh-club-games]` shortcode output showing upcoming matches.
-3.  **League Ranking**: Example of the `[suh-rankings]` shortcode displaying a league table.
-4.  **Team Calendar**: The responsive calendar view with ICS export link.
+**Example:**
+```
+[suh-calendars team_id="427892"]
+```
 
-== Changelog ==
+![Calendar Example](assets/screenshot-4.png)
 
-= 1.0.0 =
-*   Initial release with support for API v2.
-*   Added shortcodes for calendars, rankings, teams, and players.
-*   Implemented responsive table design.
+= League & Rankings =
 
-= 0.0.3 =
-*   Added error handling.
-*   Expanded data support.
+| Shortcode | Description | Attributes |
+|-----------|-------------|------------|
+| `[suh-rankings]` | Show the ranking table. | `season`, `league`, `game_class`, `group` |
+| `[suh-topscorers]` | Show the topscorer list. | `season`, `league`, `game_class`, `group` |
+| `[suh-groups]` | List available groups. | `season`, `league`, `game_class` |
 
-= 0.0.1 =
-*   Initial development.
+**Example:**
+```
+[suh-rankings league="1" game_class="11" group="416947"]
+```
 
-== Shortcodes ==
+![Ranking Example](assets/screenshot-3.png)
 
-*   `[suh-club-teams]`: List all teams of the configured club.
-*   `[suh-club-games]`: List all games of the configured club.
-*   `[suh-team-games team_id="..."]`: List games for a specific team.
-*   `[suh-calendars team_id="..." | club_id="..."]`: Show upcoming games and ICS link.
-*   `[suh-rankings season="..." league="..." game_class="..." group="..."]`: Show league rankings.
-*   `[suh-topscorers season="..." league="..." game_class="..." group="..."]`: Show topscorer list.
-*   `[suh-game-events game_id="..."]`: Show events for a specific game.
-*   `[suh-player player_id="..."]`: Show player profile.
+= Players & Games =
+
+| Shortcode | Description | Attributes |
+|-----------|-------------|------------|
+| `[suh-player]` | Show player profile. | `player_id` |
+| `[suh-game-events]` | Show events (goals, penalties) of a game. | `game_id` |
+| `[suh-national-players]` | List national team players. | None |
+
+== 🎨 Customization ==
+
+The plugin uses standard CSS classes prefixed with `.sfa-`. You can easily override these in your theme's `style.css` or the Customizer to match your site's branding.
+
+== ❓ FAQ ==
+
+**Q: Where do I find the IDs?**  
+A: You can find Team, Club, and League IDs in the URL on the [Swiss Unihockey website](https://www.swissunihockey.ch) or by using the `[suh-clubs]` and `[suh-leagues]` shortcodes to explore.
+
+**Q: Is this plugin free?**  
+A: Yes, it is open-source and free to use.
+
+== 📸 Screenshots ==
+
+1.  **Settings Page**: Easy configuration.
+2.  **Club Games**: Overview of all club matches.
+3.  **Rankings**: Detailed league tables.
+4.  **Calendar**: Upcoming games with calendar export.
+
+---
+
+*Developed by [Flavio Waser](https://flaviowaser.ch)*

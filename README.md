@@ -3,7 +3,11 @@
 ![Banner](assets/banner-772x250.png)
 
 **Contributors:** flaviowaser  
+**Donate link:** https://flaviowaser.ch/  
 **Tags:** floorball, api, swiss floorball, unihockey, sports  
+**Requires at least:** 5.0  
+**Tested up to:** 6.4  
+**Stable tag:** 1.0.0  
 **License:** GPLv2 or later  
 
 The **Swiss Floorball API** plugin brings the power of the Swiss Unihockey API v2 to your WordPress site. Display games, rankings, team rosters, and player statistics with ease using simple shortcodes.
@@ -58,7 +62,7 @@ Use these shortcodes in any Page or Post to display data.
 
 **Example:**
 ```
-[suh-rankings league="1" game_class="11" group="1"]
+[suh-rankings league="1" game_class="11" group="416947"]
 ```
 
 ![Ranking Example](assets/screenshot-3.png)

@@ -3,21 +3,10 @@
 /**
  * Fired when the plugin is uninstalled.
  *
- * When populating this file, consider the following flow
- * of control:
- *
- * - This method should be static
- * - Check if the $_REQUEST content actually is the plugin name
- * - Run an admin referrer check to make sure it goes through authentication
- * - Verify the output of $_GET makes sense
- * - Repeat with other user roles. Best directly by using the links/query string parameters.
- * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
+ * This file is executed when the plugin is deleted through the WordPress admin interface.
+ * It removes all plugin data from the database including:
+ * - Plugin options (settings)
+ * - Cached API data (transients)
  *
  * @link       https://flaviowaser.ch
  * @since      1.0.0
@@ -28,4 +17,50 @@
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
+}
+
+/**
+ * Delete all plugin data for a single site.
+ *
+ * @since    1.0.0
+ */
+function swiss_floorball_api_uninstall_site() {
+	global $wpdb;
+
+	// Delete plugin options
+	delete_option( 'swissfloorball_api_key' );
+	delete_option( 'swissfloorball_club_number' );
+	delete_option( 'swissfloorball_club_name' );
+	delete_option( 'swissfloorball_actual_season' );
+
+	// Delete all cached API data (transients with 'sfa_' prefix)
+	// This includes both the transient values and their timeout entries
+	$wpdb->query( 
+		"DELETE FROM {$wpdb->options} 
+		WHERE option_name LIKE '_transient_sfa_%' 
+		OR option_name LIKE '_transient_timeout_sfa_%'" 
+	);
+}
+
+/**
+ * Run the uninstall process.
+ *
+ * For multisite installations, iterate through all sites.
+ * For single site installations, just clean up the current site.
+ *
+ * @since    1.0.0
+ */
+if ( is_multisite() ) {
+	// Get all sites in the network
+	$sites = get_sites( array( 'number' => 0 ) );
+
+	foreach ( $sites as $site ) {
+		// Switch to each site and run cleanup
+		switch_to_blog( $site->blog_id );
+		swiss_floorball_api_uninstall_site();
+		restore_current_blog();
+	}
+} else {
+	// Single site installation
+	swiss_floorball_api_uninstall_site();
 }

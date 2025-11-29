@@ -369,7 +369,7 @@ public function handle_clear_cache() {
 					);
 		add_settings_field(
 			'swissfloorball_api_key',
-			'Swiss Floorball API Key',
+			'Swiss Floorball API Key (Optional)',
 			array( $this, 'settings_page_render_settings_field' ),
 			'settings_page_general_settings',
 			'settings_page_general_section',

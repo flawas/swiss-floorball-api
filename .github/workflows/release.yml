@@ -29,13 +29,16 @@ jobs:
           fi
           echo "Version verified: $PLUGIN_VERSION"
 
+      - name: Generate readme.txt
+        run: php scripts/convert_readme.php
+
       - name: Create ZIP archive
         run: |
           # Create a temporary directory for the zip content
           mkdir swiss-floorball-api
           
           # Copy files to the directory, excluding git and dev files
-          rsync -av --progress . swiss-floorball-api --exclude swiss-floorball-api --exclude .git --exclude .github --exclude .gitignore --exclude .DS_Store --exclude docker-compose.yml --exclude Dockerfile
+          rsync -av --progress . swiss-floorball-api --exclude swiss-floorball-api --exclude .git --exclude .github --exclude .gitignore --exclude .DS_Store --exclude docker-compose.yml --exclude Dockerfile --exclude scripts --exclude verify_api.php --exclude assets --exclude .gitattributes
           
           # Create the zip file
           zip -r swiss-floorball-api.zip swiss-floorball-api

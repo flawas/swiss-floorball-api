@@ -179,6 +179,7 @@
         border-radius: 0;
         box-shadow: none;
         background: transparent;
+        margin-bottom: 16px;
     }
 
     .table thead,
@@ -189,24 +190,40 @@
     .table tbody tr,
     .sfa-data-table tbody tr {
         display: block;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         border: 1px solid var(--sfa-border);
-        border-radius: 12px;
+        border-radius: 16px;
         overflow: hidden;
         background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        padding-left: 4px;
     }
 
     .table tbody tr:hover,
     .sfa-data-table tbody tr:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 16px rgba(0, 102, 204, 0.12);
+        box-shadow: 0 6px 20px rgba(0, 102, 204, 0.15);
     }
 
     .table tbody tr:nth-child(even),
     .sfa-data-table tbody tr:nth-child(even) {
         background: white;
+    }
+
+    /* Colored left border accent */
+    .table tbody tr::before,
+    .sfa-data-table tbody tr::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--sfa-primary) 0%, var(--sfa-secondary) 100%);
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
     }
 
     .table td,
@@ -215,43 +232,85 @@
         justify-content: space-between;
         align-items: center;
         text-align: right;
-        padding: 14px 16px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 16px 18px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         position: relative;
-        min-height: 44px;
+        min-height: 48px;
+        font-size: 15px;
+        line-height: 1.5;
     }
 
     .table td:first-child,
     .sfa-data-table td:first-child {
-        background: linear-gradient(90deg, rgba(0, 102, 204, 0.05) 0%, transparent 100%);
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        background: linear-gradient(90deg, rgba(0, 102, 204, 0.04) 0%, transparent 100%);
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
         font-weight: 600;
+        padding-top: 18px;
+        color: var(--sfa-primary);
+        font-size: 16px;
     }
 
     .table td:last-child,
     .sfa-data-table td:last-child {
         border-bottom: none;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        padding-bottom: 18px;
     }
 
     .table td::before,
     .sfa-data-table td::before {
         content: attr(data-label);
         flex: 0 0 auto;
-        font-weight: 600;
+        font-weight: 700;
         color: var(--sfa-text);
         text-transform: uppercase;
         font-size: 11px;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
         margin-right: 16px;
+        text-align: left;
+        max-width: 45%;
+    }
+
+    /* Better handling of long content */
+    .table td > *,
+    .sfa-data-table td > * {
+        word-break: break-word;
+        max-width: 50%;
+        text-align: right;
     }
 
     /* Add subtle gradient to alternating cells */
-    .table td:nth-child(odd),
-    .sfa-data-table td:nth-child(odd) {
-        background: rgba(248, 249, 250, 0.3);
+    .table td:nth-child(even),
+    .sfa-data-table td:nth-child(even) {
+        background: rgba(248, 249, 250, 0.4);
+    }
+
+    /* Improve images in mobile tables */
+    .table td img,
+    .sfa-data-table td img {
+        max-width: 28px;
+        max-height: 28px;
+        height: auto;
+        vertical-align: middle;
+        margin-left: 8px;
+    }
+
+    /* Better link styling */
+    .table td a,
+    .sfa-data-table td a {
+        color: var(--sfa-primary);
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease;
+        word-break: break-all;
+    }
+
+    .table td a:hover,
+    .sfa-data-table td a:hover {
+        border-bottom-color: var(--sfa-primary);
     }
 }
 

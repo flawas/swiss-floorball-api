@@ -113,7 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <strong>game_class</strong>: Spielklasse ID.<br>
                         <strong>group</strong>: Gruppen ID.
                     </td>
-                    <td><code>[suh-rankings group="Gruppe 1"]</code></td>
+                    <td><code>[suh-rankings group="416947"]</code></td>
                 </tr>
                 <tr>
                     <td><code>[suh-player]</code></td>
