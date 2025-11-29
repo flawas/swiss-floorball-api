@@ -20,25 +20,23 @@ jobs:
         run: |
           if [ -n "${{ github.event.inputs.tag }}" ]; then
             VERSION=${{ github.event.inputs.tag }}
-          else
+          elif [[ "$GITHUB_REF" == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            echo "Error: No tag provided and not a tag push"
+            exit 1
           fi
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Verify version in main file
         run: |
-          # Extract plugin version from file (second word after 'Version:')
           PLUGIN_VERSION=$(grep "Version:" swiss-floorball-api.php | awk '{print $2}')
-          
-          # Get tag version from previous step
           TAG_VERSION=${{ steps.get_version.outputs.VERSION }}
           
-          # Compare
           if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
             echo "Error: Plugin version ($PLUGIN_VERSION) does not match tag version ($TAG_VERSION)"
             exit 1
           fi
-          
           echo "Version verified: $PLUGIN_VERSION"
 
       - name: Generate readme.txt
