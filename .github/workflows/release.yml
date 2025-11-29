@@ -1,0 +1,51 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Verify version in main file
+        run: |
+          PLUGIN_VERSION=$(grep "Version:" swiss-floorball-api.php | awk '{print $2}')
+          TAG_VERSION=${{ steps.get_version.outputs.VERSION }}
+          
+          if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
+            echo "Error: Plugin version ($PLUGIN_VERSION) does not match tag version ($TAG_VERSION)"
+            exit 1
+          fi
+          echo "Version verified: $PLUGIN_VERSION"
+
+      - name: Create ZIP archive
+        run: |
+          # Create a temporary directory for the zip content
+          mkdir swiss-floorball-api
+          
+          # Copy files to the directory, excluding git and dev files
+          rsync -av --progress . swiss-floorball-api --exclude swiss-floorball-api --exclude .git --exclude .github --exclude .gitignore --exclude .DS_Store --exclude docker-compose.yml --exclude Dockerfile
+          
+          # Create the zip file
+          zip -r swiss-floorball-api.zip swiss-floorball-api
+          
+          # Clean up
+          rm -rf swiss-floorball-api
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: swiss-floorball-api.zip
+          generate_release_notes: true
