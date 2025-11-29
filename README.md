@@ -24,11 +24,12 @@ The **Swiss Floorball API** plugin brings the power of the Swiss Unihockey API v
 
 ## 🛠 Installation
 
-1. Download the plugin and upload the `swiss-floorball-api` folder to your `/wp-content/plugins/` directory.
+1. Download the plugin from the [releases page on GitHub](https://github.com/flawas/swiss-floorball-api/releases) and upload the `swiss-floorball-api.zip` file to your WordPress plugins.
 2. Activate the plugin through the **Plugins** menu in WordPress.
 3. Navigate to **Settings > Swiss Floorball API**.
 4. Enter your **Club ID** (e.g., `427892`) and the **Current Season** (e.g., `2025`).
 5. Click **Save Changes**.
+6. Add the shortcodes to your pages or posts.
 
 ![Settings Page](assets/screenshot-admin-club-backend.png)
 *Configure your Club ID and Season in the settings.*
