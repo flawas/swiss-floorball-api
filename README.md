@@ -30,7 +30,7 @@ The **Swiss Floorball API** plugin brings the power of the Swiss Unihockey API v
 4. Enter your **Club ID** (e.g., `427892`) and the **Current Season** (e.g., `2025`).
 5. Click **Save Changes**.
 
-![Settings Page](assets/screenshot-settings.png)
+![Settings Page](assets/screenshot-admin-club-backend.png)
 *Configure your Club ID and Season in the settings.*
 
 ## 📝 Shortcodes
