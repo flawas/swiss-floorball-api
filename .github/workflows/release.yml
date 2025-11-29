@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:  
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,17 +17,28 @@ jobs:
 
       - name: Get version from tag
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            VERSION=${{ github.event.inputs.tag }}
+          else
+            VERSION=${GITHUB_REF#refs/tags/v}
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Verify version in main file
         run: |
-          PLUGIN_VERSION=$(grep "Version:" swiss-floorball-api.php)
+          # Extract plugin version from file (second word after 'Version:')
+          PLUGIN_VERSION=$(grep "Version:" swiss-floorball-api.php | awk '{print $2}')
+          
+          # Get tag version from previous step
           TAG_VERSION=${{ steps.get_version.outputs.VERSION }}
           
+          # Compare
           if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
             echo "Error: Plugin version ($PLUGIN_VERSION) does not match tag version ($TAG_VERSION)"
             exit 1
           fi
+          
           echo "Version verified: $PLUGIN_VERSION"
 
       - name: Generate readme.txt
