@@ -3,7 +3,7 @@
 ![Banner](assets/banner-914x298.png)
 
 **Contributors:** flaviowaser  
-**Donate link:** <https://flaviowaser.ch/>  
+**Donate link:** <https://www.paypal.me/flaviowaser>  
 **Tags:** floorball, api, swiss floorball, unihockey, sports  
 **Requires at least:** 5.0
 **Tested up to:** 6.4  
