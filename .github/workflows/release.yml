@@ -39,7 +39,9 @@ jobs:
       - name: Verify version in main file
         run: |
           PLUGIN_VERSION=$(grep "Version:" swiss-floorball-api.php | awk '{print $2}')
+          echo "Resolved plugin version: $PLUGIN_VERSION"
           TAG_VERSION=${{ steps.get_version.outputs.VERSION }}
+          echo "Resolved tag version: $TAG_VERSION"
           
           if [ "$PLUGIN_VERSION" != "$TAG_VERSION" ]; then
             echo "Error: Plugin version ($PLUGIN_VERSION) does not match tag version ($TAG_VERSION)"
