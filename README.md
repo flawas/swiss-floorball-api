@@ -1,11 +1,11 @@
 # Swiss Floorball API for WordPress
 
-![Banner](assets/banner-772x250.png)
+![Banner](assets/banner-772x250.jpeg)
 
 **Contributors:** flaviowaser  
-**Donate link:** https://flaviowaser.ch/  
+**Donate link:** <https://flaviowaser.ch/>  
 **Tags:** floorball, api, swiss floorball, unihockey, sports  
-**Requires at least:** 5.0  
+**Requires at least:** 5.0
 **Tested up to:** 6.4  
 **Stable tag:** 1.0.0  
 **License:** GPLv2 or later  
@@ -14,22 +14,23 @@ The **Swiss Floorball API** plugin brings the power of the Swiss Unihockey API v
 
 ## 🚀 Features
 
-*   **🔌 Plug & Play:** Configure your Club ID once and get instant access to your club's data.
-*   **📅 Calendars:** Display upcoming games for teams or entire clubs. Includes **ICS subscription links** for users to add games to their personal calendars.
-*   **🏆 Rankings:** Always up-to-date league tables for any group or league.
-*   **📊 Statistics:** Show topscorer lists and detailed game events.
-*   **📱 Responsive:** Built-in responsive tables that look great on mobile devices.
-*   **👤 Player Profiles:** Showcase individual player stats and national team members.
+* **🔌 Plug & Play:** Configure your Club ID once and get instant access to your club's data.
+* **📅 Calendars:** Display upcoming games for teams or entire clubs. Includes **ICS subscription links** for users to add games to their personal calendars.
+* **🏆 Rankings:** Always up-to-date league tables for any group or league.
+
+* **📊 Statistics:** Show topscorer lists and detailed game events.
+* **📱 Responsive:** Built-in responsive tables that look great on mobile devices.
+* **👤 Player Profiles:** Showcase individual player stats and national team members.
 
 ## 🛠 Installation
 
-1.  Download the plugin and upload the `swiss-floorball-api` folder to your `/wp-content/plugins/` directory.
-2.  Activate the plugin through the **Plugins** menu in WordPress.
-3.  Navigate to **Settings > Swiss Floorball API**.
-4.  Enter your **Club ID** (e.g., `427892`) and the **Current Season** (e.g., `2025`).
-5.  Click **Save Changes**.
+1. Download the plugin and upload the `swiss-floorball-api` folder to your `/wp-content/plugins/` directory.
+2. Activate the plugin through the **Plugins** menu in WordPress.
+3. Navigate to **Settings > Swiss Floorball API**.
+4. Enter your **Club ID** (e.g., `427892`) and the **Current Season** (e.g., `2025`).
+5. Click **Save Changes**.
 
-![Settings Page](assets/screenshot-1.png)
+![Settings Page](assets/screenshot-settings.png)
 *Configure your Club ID and Season in the settings.*
 
 ## 📝 Shortcodes
@@ -46,11 +47,10 @@ Use these shortcodes in any Page or Post to display data.
 | `[suh-calendars]` | Show upcoming games + ICS link. | `team_id`, `club_id` |
 
 **Example:**
+
 ```
 [suh-calendars team_id="427892"]
 ```
-
-![Calendar Example](assets/screenshot-4.png)
 
 ### League & Rankings
 
@@ -61,11 +61,10 @@ Use these shortcodes in any Page or Post to display data.
 | `[suh-groups]` | List available groups. | `season`, `league`, `game_class` |
 
 **Example:**
+
 ```
 [suh-rankings league="1" game_class="11" group="416947"]
 ```
-
-![Ranking Example](assets/screenshot-3.png)
 
 ### Players & Games
 
@@ -87,12 +86,26 @@ A: You can find Team, Club, and League IDs in the URL on the [Swiss Unihockey we
 **Q: Is this plugin free?**  
 A: Yes, it is open-source and free to use.
 
+**Q: Is this plugin a official Swiss Floorball plugin?**  
+A: No, this plugin is not an official Swiss Floorball plugin. And not related to Swiss Floorball in any way.
+
+**Q: Can I use this plugin for commercial purposes?**  
+A: No, this plugin is not for commercial purposes. It is only for personal and non-commercial use. It is designed for Swiss Floorball clubs and teams to display their data on their websites.
+
+**Q:
+
 ## 📸 Screenshots
 
-1.  **Settings Page**: Easy configuration.
-2.  **Club Games**: Overview of all club matches.
-3.  **Rankings**: Detailed league tables.
-4.  **Calendar**: Upcoming games with calendar export.
+1. **Settings Page**: Easy configuration.
+![Settings Page](assets/screenshot-admin-backend.png)
+2. **Club Games**: Overview of all club matches.
+![Club Games](assets/screenshot-calendar-backend.png)
+3. **Teams**: Detailed teams tables.
+![Teams](assets/screenshot-teams-backend.png)
+4. **Calendar**: Upcoming games with calendar export.
+![Calendar](assets/screenshot-calendar-frontend.png)
+5. **Rankings**: Detailed rankings tables.
+![Rankings](assets/screenshot-ranking-frontend.png)
 
 ---
 
