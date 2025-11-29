@@ -1,6 +1,6 @@
 # Swiss Floorball API for WordPress
 
-![Banner](assets/banner-772x250.jpeg)
+![Banner](assets/banner-914x298.png)
 
 **Contributors:** flaviowaser  
 **Donate link:** <https://flaviowaser.ch/>  
@@ -81,18 +81,19 @@ The plugin uses standard CSS classes prefixed with `.sfa-`. You can easily overr
 ## ❓ FAQ
 
 **Q: Where do I find the IDs?**  
-A: You can find Team, Club, and League IDs in the URL on the [Swiss Unihockey website](https://www.swissunihockey.ch) or by using the `[suh-clubs]` and `[suh-leagues]` shortcodes to explore.
+A: You can find Team, Club, and League IDs in the URL on the [Swiss Unihockey website](https://www.swissunihockey.ch) or by using the plugin backend to explore and copy the IDs.
 
 **Q: Is this plugin free?**  
-A: Yes, it is open-source and free to use.
+A: Yep! It’s open-source and completely free to use.
 
-**Q: Is this plugin a official Swiss Floorball plugin?**  
-A: No, this plugin is not an official Swiss Floorball plugin. And not related to Swiss Floorball in any way.
+**Q: Is this an official Swiss Floorball plugin?**  
+A: Nope. This plugin isn’t official and has no connection to Swiss Floorball.
 
 **Q: Can I use this plugin for commercial purposes?**  
-A: No, this plugin is not for commercial purposes. It is only for personal and non-commercial use. It is designed for Swiss Floorball clubs and teams to display their data on their websites.
+A: Sorry, no. It’s meant only for personal and non-commercial use. It’s designed for Swiss Floorball clubs and teams to show their data on their websites.
 
-**Q:
+**Q: Any further questions?**  
+A: Just drop me a message on [GitHub](https://github.com/flawas), [LinkedIn](https://www.linkedin.com/in/flawas/), or via my [homepage](https://flaviowaser.ch/contact/).
 
 ## 📸 Screenshots
 
