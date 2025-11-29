@@ -109,6 +109,12 @@ A: Just drop me a message on [GitHub](https://github.com/flawas), [LinkedIn](htt
 5. **Rankings**: Detailed rankings tables.
 ![Rankings](assets/screenshot-ranking-frontend.png)
 
+## 📜 Changelog
+
+### 1.0.0 (2025-11-29)
+
+* Initial release
+
 ---
 
 *Developed by [Flavio Waser](https://flaviowaser.ch)*
