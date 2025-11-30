@@ -29,6 +29,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<h3>⚙️ Aktuelle Einstellungen</h3>
 			<table class="sfa-settings-table">
 				<tr>
+					<td>API Key</td>
+					<td><?php 
+						$api_key = get_option('swissfloorball_api_key');
+						if ( $api_key ) {
+							$masked_key = str_repeat('*', max(0, strlen($api_key) - 3)) . substr($api_key, -3);
+							echo esc_html( $masked_key );
+						} else {
+							echo '—';
+						}
+					?></td>
+				</tr>
+				<tr>
 					<td>Club ID</td>
 					<td><?php echo esc_html( get_option('swissfloorball_club_number') ) ?: '—'; ?></td>
 				</tr>
@@ -53,7 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<a href="<?php echo admin_url('admin.php?page=swiss-floorball-api-league'); ?>" class="button">Ligen</a>
 			</p>
 			<p style="margin: 5px 0;">
-				<a href="<?php echo admin_url('admin.php?page=swiss-floorball-api-teams'); ?>" class="button">Teams</a>
+				<a href="<?php echo admin_url('admin.php?page=swiss-floorball-api-teams'); ?>" class="button">Clubs</a>
 			</p>
 			<p style="margin: 5px 0;">
 				<a href="<?php echo admin_url('admin.php?page=swiss-floorball-api-seasons'); ?>" class="button">Saisons</a>

@@ -21,46 +21,46 @@
 }
 
 /* Reset and Base Styles */
-.swiss-floorball-container {
+.swiss-floorball-plugin .swiss-floorball-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
 /* Responsive Typography */
-.swiss-floorball-container h1,
-.swiss-floorball-container h2,
-.swiss-floorball-container h3,
-.swiss-floorball-container h4,
-.swiss-floorball-container h5 {
+.swiss-floorball-plugin .swiss-floorball-container h1,
+.swiss-floorball-plugin .swiss-floorball-container h2,
+.swiss-floorball-plugin .swiss-floorball-container h3,
+.swiss-floorball-plugin .swiss-floorball-container h4,
+.swiss-floorball-plugin .swiss-floorball-container h5 {
     color: var(--sfa-text);
     margin-bottom: 1rem;
     font-weight: 600;
     line-height: 1.3;
 }
 
-.swiss-floorball-container h1 {
+.swiss-floorball-plugin .swiss-floorball-container h1 {
     font-size: clamp(24px, 5vw, 32px);
 }
 
-.swiss-floorball-container h2 {
+.swiss-floorball-plugin .swiss-floorball-container h2 {
     font-size: clamp(20px, 4vw, 26px);
 }
 
-.swiss-floorball-container h3 {
+.swiss-floorball-plugin .swiss-floorball-container h3 {
     font-size: clamp(18px, 3.5vw, 22px);
 }
 
-.swiss-floorball-container h4 {
+.swiss-floorball-plugin .swiss-floorball-container h4 {
     font-size: clamp(16px, 3vw, 20px);
 }
 
-.swiss-floorball-container h5 {
+.swiss-floorball-plugin .swiss-floorball-container h5 {
     font-size: clamp(14px, 2.5vw, 18px);
 }
 
 /* Enhanced Card Styling - Fully Responsive */
-.card {
+.swiss-floorball-plugin .card {
     background: white;
     border: 1px solid var(--sfa-border);
     border-radius: 12px;
@@ -72,7 +72,7 @@
     overflow: hidden;
 }
 
-.card::before {
+.swiss-floorball-plugin .card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -84,36 +84,36 @@
     transition: opacity 0.3s ease;
 }
 
-.card:hover {
+.swiss-floorball-plugin .card:hover {
     box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
     transform: translateY(-4px);
     border-color: var(--sfa-primary-light);
 }
 
-.card:hover::before {
+.swiss-floorball-plugin .card:hover::before {
     opacity: 1;
 }
 
-.card-body {
+.swiss-floorball-plugin .card-body {
     padding: clamp(12px, 2vw, 20px);
 }
 
-.card-title {
+.swiss-floorball-plugin .card-title {
     font-size: clamp(16px, 3vw, 20px);
     font-weight: 600;
     color: var(--sfa-text);
     margin-bottom: 12px;
 }
 
-.card-text {
+.swiss-floorball-plugin .card-text {
     font-size: clamp(13px, 2.5vw, 15px);
     color: var(--sfa-text-light);
     line-height: 1.6;
 }
 
 /* Responsive Tables - Mobile First */
-.table,
-.sfa-data-table {
+.swiss-floorball-plugin .table,
+.swiss-floorball-plugin .sfa-data-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -125,13 +125,13 @@
     margin-bottom: 20px;
 }
 
-.table thead,
-.sfa-data-table thead {
+.swiss-floorball-plugin .table thead,
+.swiss-floorball-plugin .sfa-data-table thead {
     background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-.table th,
-.sfa-data-table th {
+.swiss-floorball-plugin .table th,
+.swiss-floorball-plugin .sfa-data-table th {
     padding: clamp(10px, 2vw, 16px);
     text-align: left;
     font-weight: 600;
@@ -142,39 +142,39 @@
     border-bottom: 2px solid var(--sfa-primary);
 }
 
-.table td,
-.sfa-data-table td {
+.swiss-floorball-plugin .table td,
+.swiss-floorball-plugin .sfa-data-table td {
     padding: clamp(10px, 2vw, 16px);
     border-bottom: 1px solid var(--sfa-light-bg);
     color: var(--sfa-text);
     font-size: clamp(12px, 2.2vw, 14px);
 }
 
-.table tbody tr,
-.sfa-data-table tbody tr {
+.swiss-floorball-plugin .table tbody tr,
+.swiss-floorball-plugin .sfa-data-table tbody tr {
     transition: all 0.2s ease;
 }
 
-.table tbody tr:hover,
-.sfa-data-table tbody tr:hover {
+.swiss-floorball-plugin .table tbody tr:hover,
+.swiss-floorball-plugin .sfa-data-table tbody tr:hover {
     background: linear-gradient(90deg, rgba(0, 102, 204, 0.03) 0%, transparent 100%);
 }
 
-.table tbody tr:nth-child(even),
-.sfa-data-table tbody tr:nth-child(even) {
+.swiss-floorball-plugin .table tbody tr:nth-child(even),
+.swiss-floorball-plugin .sfa-data-table tbody tr:nth-child(even) {
     background: rgba(248, 249, 250, 0.5);
 }
 
-.table tbody tr:last-child td,
-.sfa-data-table tbody tr:last-child td {
+.swiss-floorball-plugin .table tbody tr:last-child td,
+.swiss-floorball-plugin .sfa-data-table tbody tr:last-child td {
     border-bottom: none;
 }
 
 /* Mobile Table - Stack on Small Screens */
 @media screen and (max-width: 768px) {
 
-    .table,
-    .sfa-data-table {
+    .swiss-floorball-plugin .table,
+    .swiss-floorball-plugin .sfa-data-table {
         border: 0;
         border-radius: 0;
         box-shadow: none;
@@ -182,13 +182,13 @@
         margin-bottom: 16px;
     }
 
-    .table thead,
-    .sfa-data-table thead {
+    .swiss-floorball-plugin .table thead,
+    .swiss-floorball-plugin .sfa-data-table thead {
         display: none;
     }
 
-    .table tbody tr,
-    .sfa-data-table tbody tr {
+    .swiss-floorball-plugin .table tbody tr,
+    .swiss-floorball-plugin .sfa-data-table tbody tr {
         display: block;
         margin-bottom: 16px;
         border: 1px solid var(--sfa-border);
@@ -201,20 +201,20 @@
         padding-left: 4px;
     }
 
-    .table tbody tr:hover,
-    .sfa-data-table tbody tr:hover {
+    .swiss-floorball-plugin .table tbody tr:hover,
+    .swiss-floorball-plugin .sfa-data-table tbody tr:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(0, 102, 204, 0.15);
     }
 
-    .table tbody tr:nth-child(even),
-    .sfa-data-table tbody tr:nth-child(even) {
+    .swiss-floorball-plugin .table tbody tr:nth-child(even),
+    .swiss-floorball-plugin .sfa-data-table tbody tr:nth-child(even) {
         background: white;
     }
 
     /* Colored left border accent */
-    .table tbody tr::before,
-    .sfa-data-table tbody tr::before {
+    .swiss-floorball-plugin .table tbody tr::before,
+    .swiss-floorball-plugin .sfa-data-table tbody tr::before {
         content: '';
         position: absolute;
         top: 0;
@@ -226,8 +226,8 @@
         border-bottom-left-radius: 16px;
     }
 
-    .table td,
-    .sfa-data-table td {
+    .swiss-floorball-plugin .table td,
+    .swiss-floorball-plugin .sfa-data-table td {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -240,8 +240,8 @@
         line-height: 1.5;
     }
 
-    .table td:first-child,
-    .sfa-data-table td:first-child {
+    .swiss-floorball-plugin .table td:first-child,
+    .swiss-floorball-plugin .sfa-data-table td:first-child {
         background: linear-gradient(90deg, rgba(0, 102, 204, 0.04) 0%, transparent 100%);
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
@@ -251,16 +251,16 @@
         font-size: 16px;
     }
 
-    .table td:last-child,
-    .sfa-data-table td:last-child {
+    .swiss-floorball-plugin .table td:last-child,
+    .swiss-floorball-plugin .sfa-data-table td:last-child {
         border-bottom: none;
         border-bottom-left-radius: 16px;
         border-bottom-right-radius: 16px;
         padding-bottom: 18px;
     }
 
-    .table td::before,
-    .sfa-data-table td::before {
+    .swiss-floorball-plugin .table td::before,
+    .swiss-floorball-plugin .sfa-data-table td::before {
         content: attr(data-label);
         flex: 0 0 auto;
         font-weight: 700;
@@ -274,22 +274,22 @@
     }
 
     /* Better handling of long content */
-    .table td > *,
-    .sfa-data-table td > * {
+    .swiss-floorball-plugin .table td > *,
+    .swiss-floorball-plugin .sfa-data-table td > * {
         word-break: break-word;
         max-width: 50%;
         text-align: right;
     }
 
     /* Add subtle gradient to alternating cells */
-    .table td:nth-child(even),
-    .sfa-data-table td:nth-child(even) {
+    .swiss-floorball-plugin .table td:nth-child(even),
+    .swiss-floorball-plugin .sfa-data-table td:nth-child(even) {
         background: rgba(248, 249, 250, 0.4);
     }
 
     /* Improve images in mobile tables */
-    .table td img,
-    .sfa-data-table td img {
+    .swiss-floorball-plugin .table td img,
+    .swiss-floorball-plugin .sfa-data-table td img {
         max-width: 28px;
         max-height: 28px;
         height: auto;
@@ -298,8 +298,8 @@
     }
 
     /* Better link styling */
-    .table td a,
-    .sfa-data-table td a {
+    .swiss-floorball-plugin .table td a,
+    .swiss-floorball-plugin .sfa-data-table td a {
         color: var(--sfa-primary);
         text-decoration: none;
         font-weight: 600;
@@ -308,49 +308,49 @@
         word-break: break-all;
     }
 
-    .table td a:hover,
-    .sfa-data-table td a:hover {
+    .swiss-floorball-plugin .table td a:hover,
+    .swiss-floorball-plugin .sfa-data-table td a:hover {
         border-bottom-color: var(--sfa-primary);
     }
 }
 
 /* Responsive Grid for Cards */
-.container {
+.swiss-floorball-plugin .container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 clamp(12px, 3vw, 20px);
 }
 
-.row {
+.swiss-floorball-plugin .row {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -12px;
 }
 
-.col,
-.col-6,
-.col-sm-6,
-.col-md-4,
-.col-lg-3 {
+.swiss-floorball-plugin .col,
+.swiss-floorball-plugin .col-6,
+.swiss-floorball-plugin .col-sm-6,
+.swiss-floorball-plugin .col-md-4,
+.swiss-floorball-plugin .col-lg-3 {
     padding: 0 12px;
     margin-bottom: 20px;
 }
 
 /* Mobile First Column Sizing */
-.col {
+.swiss-floorball-plugin .col {
     flex: 0 0 100%;
     max-width: 100%;
 }
 
-.col-6 {
+.swiss-floorball-plugin .col-6 {
     flex: 0 0 50%;
     max-width: 50%;
 }
 
 /* Tablet */
 @media screen and (min-width: 576px) {
-    .col-sm-6 {
+    .swiss-floorball-plugin .col-sm-6 {
         flex: 0 0 50%;
         max-width: 50%;
     }
@@ -358,33 +358,33 @@
 
 /* Desktop */
 @media screen and (min-width: 768px) {
-    .col-md-4 {
+    .swiss-floorball-plugin .col-md-4 {
         flex: 0 0 33.333333%;
         max-width: 33.333333%;
     }
 }
 
 @media screen and (min-width: 992px) {
-    .col-lg-3 {
+    .swiss-floorball-plugin .col-lg-3 {
         flex: 0 0 25%;
         max-width: 25%;
     }
 }
 
 /* Responsive Images */
-.img-fluid {
+.swiss-floorball-plugin .img-fluid {
     max-width: 100%;
     height: auto;
     display: block;
 }
 
-.rounded-start {
+.swiss-floorball-plugin .rounded-start {
     border-radius: 8px;
 }
 
 /* Button Styling - Fully Responsive */
-.button,
-.btn {
+.swiss-floorball-plugin .button,
+.swiss-floorball-plugin .btn {
     display: inline-block;
     padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px);
     background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%);
@@ -400,8 +400,8 @@
     text-align: center;
 }
 
-.button:hover,
-.btn:hover {
+.swiss-floorball-plugin .button:hover,
+.swiss-floorball-plugin .btn:hover {
     background: linear-gradient(135deg, var(--sfa-primary-dark) 0%, var(--sfa-primary) 100%);
     box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
     transform: translateY(-2px);
@@ -409,33 +409,33 @@
 }
 
 /* Text Utilities - Responsive */
-.text-center {
+.swiss-floorball-plugin .text-center {
     text-align: center;
 }
 
-.text-left {
+.swiss-floorball-plugin .text-left {
     text-align: left;
 }
 
-.text-right {
+.swiss-floorball-plugin .text-right {
     text-align: right;
 }
 
 /* Margin/Padding Utilities */
-.mb-3 {
+.swiss-floorball-plugin .mb-3 {
     margin-bottom: clamp(16px, 3vw, 24px);
 }
 
-.mt-3 {
+.swiss-floorball-plugin .mt-3 {
     margin-top: clamp(16px, 3vw, 24px);
 }
 
-.p-3 {
+.swiss-floorball-plugin .p-3 {
     padding: clamp(16px, 3vw, 24px);
 }
 
 /* Game Score Display - Enhanced & Responsive */
-.game-score-card {
+.swiss-floorball-plugin .game-score-card {
     background: white;
     border: 1px solid var(--sfa-border);
     border-radius: 12px;
@@ -445,48 +445,48 @@
     transition: all 0.3s ease;
 }
 
-.game-score-card:hover {
+.swiss-floorball-plugin .game-score-card:hover {
     box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
     transform: translateY(-4px);
 }
 
-.game-team {
+.swiss-floorball-plugin .game-team {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: clamp(8px, 2vw, 12px);
 }
 
-.game-team img {
+.swiss-floorball-plugin .game-team img {
     max-width: clamp(40px, 10vw, 80px);
     height: auto;
 }
 
-.game-score {
+.swiss-floorball-plugin .game-score {
     font-size: clamp(24px, 6vw, 36px);
     font-weight: 700;
     color: var(--sfa-primary);
 }
 
-.game-info {
+.swiss-floorball-plugin .game-info {
     text-align: center;
     padding: clamp(12px, 2vw, 16px);
 }
 
-.game-info p {
+.swiss-floorball-plugin .game-info p {
     margin: clamp(4px, 1vw, 8px) 0;
     font-size: clamp(12px, 2.5vw, 14px);
     color: var(--sfa-text-light);
 }
 
 /* Loading State */
-.loading {
+.swiss-floorball-plugin .loading {
     text-align: center;
     padding: clamp(30px, 5vw, 50px);
     color: var(--sfa-text-light);
 }
 
-.loading::before {
+.swiss-floorball-plugin .loading::before {
     content: "";
     display: inline-block;
     width: clamp(30px, 6vw, 40px);
@@ -504,7 +504,7 @@
 }
 
 /* Empty State */
-.empty-state {
+.swiss-floorball-plugin .empty-state {
     text-align: center;
     padding: clamp(40px, 8vw, 70px) clamp(16px, 3vw, 24px);
     color: var(--sfa-text-light);
@@ -513,43 +513,43 @@
     border: 2px dashed var(--sfa-border);
 }
 
-.empty-state-icon {
+.swiss-floorball-plugin .empty-state-icon {
     font-size: clamp(40px, 8vw, 56px);
     margin-bottom: clamp(12px, 2vw, 16px);
     opacity: 0.4;
 }
 
-.empty-state-text {
+.swiss-floorball-plugin .empty-state-text {
     font-size: clamp(14px, 3vw, 16px);
     font-weight: 500;
 }
 
 /* Tablet Optimizations */
 @media screen and (min-width: 576px) and (max-width: 991px) {
-    .swiss-floorball-container {
+    .swiss-floorball-plugin .swiss-floorball-container {
         padding: 24px;
     }
 
-    .card {
+    .swiss-floorball-plugin .card {
         padding: 20px;
     }
 }
 
 /* Desktop Optimizations */
 @media screen and (min-width: 992px) {
-    .swiss-floorball-container {
+    .swiss-floorball-plugin .swiss-floorball-container {
         padding: 30px;
     }
 
-    .row {
+    .swiss-floorball-plugin .row {
         margin: 0 -16px;
     }
 
-    .col,
-    .col-6,
-    .col-sm-6,
-    .col-md-4,
-    .col-lg-3 {
+    .swiss-floorball-plugin .col,
+    .swiss-floorball-plugin .col-6,
+    .swiss-floorball-plugin .col-sm-6,
+    .swiss-floorball-plugin .col-md-4,
+    .swiss-floorball-plugin .col-lg-3 {
         padding: 0 16px;
     }
 }
@@ -557,14 +557,14 @@
 /* Print Styles */
 @media print {
 
-    .card,
-    .table {
+    .swiss-floorball-plugin .card,
+    .swiss-floorball-plugin .table {
         box-shadow: none;
         border: 1px solid #ddd;
     }
 
-    .card:hover,
-    .table tbody tr:hover {
+    .swiss-floorball-plugin .card:hover,
+    .swiss-floorball-plugin .table tbody tr:hover {
         transform: none;
         box-shadow: none;
     }
@@ -585,13 +585,13 @@
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
 
-    .card,
-    .table {
+    .swiss-floorball-plugin .card,
+    .swiss-floorball-plugin .table {
         border-width: 2px;
     }
 
-    .button,
-    .btn {
+    .swiss-floorball-plugin .button,
+    .swiss-floorball-plugin .btn {
         border: 2px solid currentColor;
     }
 }
@@ -605,12 +605,12 @@
         --sfa-text-light: #bdc3c7;
     }
 
-    .card,
-    .table {
+    .swiss-floorball-plugin .card,
+    .swiss-floorball-plugin .table {
         background: #34495e;
     }
 
-    .table thead {
+    .swiss-floorball-plugin .table thead {
         background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
     }
 }
@@ -619,41 +619,41 @@
 @media screen and (max-width: 768px) {
 
     /* Improve touch targets */
-    .table td,
-    .sfa-data-table td,
-    .button,
-    .btn {
+    .swiss-floorball-plugin .table td,
+    .swiss-floorball-plugin .sfa-data-table td,
+    .swiss-floorball-plugin .button,
+    .swiss-floorball-plugin .btn {
         min-height: 44px;
     }
 
     /* Add breathing room */
-    .swiss-floorball-container {
+    .swiss-floorball-plugin .swiss-floorball-container {
         padding: 16px;
     }
 
     /* Optimize card spacing */
-    .card {
+    .swiss-floorball-plugin .card {
         margin-bottom: 16px;
     }
 
     /* Make headings more compact */
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
+    .swiss-floorball-plugin h1,
+    .swiss-floorball-plugin h2,
+    .swiss-floorball-plugin h3,
+    .swiss-floorball-plugin h4,
+    .swiss-floorball-plugin h5 {
         margin-bottom: 12px;
     }
 
     /* Improve table card appearance with premium styling */
-    .table tbody tr,
-    .sfa-data-table tbody tr {
+    .swiss-floorball-plugin .table tbody tr,
+    .swiss-floorball-plugin .sfa-data-table tbody tr {
         position: relative;
         padding-left: 8px;
     }
 
-    .table tbody tr::after,
-    .sfa-data-table tbody tr::after {
+    .swiss-floorball-plugin .table tbody tr::after,
+    .swiss-floorball-plugin .sfa-data-table tbody tr::after {
         content: '';
         position: absolute;
         top: 0;
@@ -667,22 +667,22 @@
     }
 
     /* Enhanced data value styling */
-    .table td,
-    .sfa-data-table td {
+    .swiss-floorball-plugin .table td,
+    .swiss-floorball-plugin .sfa-data-table td {
         font-size: 15px;
         line-height: 1.5;
     }
 
     /* Make first cell (usually rank/ID) stand out more */
-    .table td:first-child,
-    .sfa-data-table td:first-child {
+    .swiss-floorball-plugin .table td:first-child,
+    .swiss-floorball-plugin .sfa-data-table td:first-child {
         font-size: 16px;
         color: var(--sfa-primary);
     }
 
     /* Add subtle animation on scroll */
-    .table tbody tr,
-    .sfa-data-table tbody tr {
+    .swiss-floorball-plugin .table tbody tr,
+    .swiss-floorball-plugin .sfa-data-table tbody tr {
         animation: fadeInUp 0.3s ease-out;
     }
 
@@ -699,34 +699,34 @@
     }
 
     /* Better spacing for table sections */
-    .sfa-table-container {
+    .swiss-floorball-plugin .sfa-table-container {
         margin-bottom: 24px;
     }
 
     /* Improve heading hierarchy */
-    .sfa-table-container h2,
-    .sfa-table-container h3 {
+    .swiss-floorball-plugin .sfa-table-container h2,
+    .swiss-floorball-plugin .sfa-table-container h3 {
         padding-bottom: 8px;
         border-bottom: 2px solid var(--sfa-primary);
         margin-bottom: 16px;
     }
 
     /* Make labels more prominent */
-    .table td::before,
-    .sfa-data-table td::before {
+    .swiss-floorball-plugin .table td::before,
+    .swiss-floorball-plugin .sfa-data-table td::before {
         color: var(--sfa-primary-dark);
         font-weight: 700;
     }
 
     /* Add subtle pulse on active/focused elements */
-    .table tbody tr:active,
-    .sfa-data-table tbody tr:active {
+    .swiss-floorball-plugin .table tbody tr:active,
+    .swiss-floorball-plugin .sfa-data-table tbody tr:active {
         transform: scale(0.98);
         transition: transform 0.1s ease;
     }
 
     /* Improve calendar link styling */
-    .sfa-calendar-link {
+    .swiss-floorball-plugin .sfa-calendar-link {
         display: block;
         padding: 12px 16px;
         background: linear-gradient(135deg, var(--sfa-primary) 0%, var(--sfa-primary-dark) 100%);
@@ -739,28 +739,28 @@
         transition: all 0.3s ease;
     }
 
-    .sfa-calendar-link:hover,
-    .sfa-calendar-link:active {
+    .swiss-floorball-plugin .sfa-calendar-link:hover,
+    .swiss-floorball-plugin .sfa-calendar-link:active {
         box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
         transform: translateY(-2px);
     }
 
     /* Better empty state on mobile */
-    .empty-state {
+    .swiss-floorball-plugin .empty-state {
         padding: 32px 16px;
     }
 
     /* Optimize images in tables */
-    .table img,
-    .sfa-data-table img {
+    .swiss-floorball-plugin .table img,
+    .swiss-floorball-plugin .sfa-data-table img {
         max-width: 24px;
         height: auto;
         vertical-align: middle;
     }
 
     /* Add visual feedback for interactive elements */
-    .table a,
-    .sfa-data-table a {
+    .swiss-floorball-plugin .table a,
+    .swiss-floorball-plugin .sfa-data-table a {
         color: var(--sfa-primary);
         text-decoration: none;
         font-weight: 600;
@@ -768,26 +768,26 @@
         transition: border-color 0.2s ease;
     }
 
-    .table a:hover,
-    .sfa-data-table a:hover {
+    .swiss-floorball-plugin .table a:hover,
+    .swiss-floorball-plugin .sfa-data-table a:hover {
         border-bottom-color: var(--sfa-primary);
     }
 
     /* Improve card layout for game scores */
-    .card .row {
+    .swiss-floorball-plugin .card .row {
         gap: 12px;
     }
 
     /* Better button styling on mobile */
-    .button,
-    .btn {
+    .swiss-floorball-plugin .button,
+    .swiss-floorball-plugin .btn {
         width: 100%;
         max-width: 100%;
         justify-content: center;
     }
 
     /* Add safe area padding for notched devices */
-    .swiss-floorball-container {
+    .swiss-floorball-plugin .swiss-floorball-container {
         padding-left: max(16px, env(safe-area-inset-left));
         padding-right: max(16px, env(safe-area-inset-right));
         padding-bottom: max(16px, env(safe-area-inset-bottom));
@@ -797,30 +797,4 @@
 /* Smooth scroll for better UX */
 html {
     scroll-behavior: smooth;
-}
-
-/* Focus styles for accessibility */
-a:focus,
-button:focus,
-.btn:focus {
-    outline: 2px solid var(--sfa-primary);
-    outline-offset: 2px;
-}
-
-/* Prevent text selection on interactive elements for better mobile feel */
-@media screen and (max-width: 768px) {
-
-    .table tbody tr,
-    .sfa-data-table tbody tr,
-    .button,
-    .btn {
-        -webkit-tap-highlight-color: rgba(0, 102, 204, 0.1);
-        user-select: none;
-    }
-
-    /* Allow text selection in data cells */
-    .table td,
-    .sfa-data-table td {
-        user-select: text;
-    }
 }

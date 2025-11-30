@@ -19,12 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap sfa-admin-wrap">
 	<div class="sfa-admin-header">
-		<h1>👥 Teams</h1>
-		<p>Übersicht aller verfügbaren Teams</p>
+		<h1>👥 Clubs</h1>
+		<p>Übersicht aller verfügbaren Clubs</p>
 	</div>
 
 	<div class="sfa-search-container">
-		<input type="text" id="sfa-team-search" class="sfa-search-input" placeholder="🔍 Team suchen (Name oder ID)...">
+		<input type="text" id="sfa-team-search" class="sfa-search-input" placeholder="🔍 Club suchen (Name oder ID)...">
 	</div>
 
 	<div class="sfa-table-container">

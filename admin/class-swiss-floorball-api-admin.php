@@ -120,7 +120,8 @@ class Swiss_Floorball_Api_Admin {
 		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Einstellungen', 'administrator', $this->plugin_name.'-settings', array( $this, 'displayPluginAdminSettings' ));
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Liga', 'administrator', $this->plugin_name.'-league', array( $this, 'displayPluginAdminHelperLeague' ));
-		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Team', 'administrator', $this->plugin_name.'-teams', array( $this, 'displayPluginAdminHelperTeams' ));
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Clubs', 'administrator', $this->plugin_name.'-teams', array( $this, 'displayPluginAdminHelperTeams' ));
+		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Spiele', 'administrator', $this->plugin_name.'-matches', array( $this, 'displayPluginAdminMatches' ));
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Saison', 'administrator', $this->plugin_name.'-seasons', array( $this, 'displayPluginAdminHelperSeasons' ));
 		add_submenu_page( $this->plugin_name, 'Swiss Unihockey', 'Shortcodes', 'administrator', $this->plugin_name.'-shortcodes', array( $this, 'displayPluginAdminShortcodes' ));
 
@@ -202,6 +203,15 @@ class Swiss_Floorball_Api_Admin {
 	 */
 	public function displayPluginAdminShortcodes() {
 		require_once 'partials/'.$this->plugin_name.'-admin-shortcodes-display.php';
+	}
+
+	/**
+	 * Return matches display page
+	 *
+	 * @since    1.0.0
+	 */
+	public function displayPluginAdminMatches() {
+		require_once 'partials/'.$this->plugin_name.'-admin-matches-display.php';
 	}
 
 	/**

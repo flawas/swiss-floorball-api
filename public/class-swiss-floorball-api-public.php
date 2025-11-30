@@ -134,7 +134,9 @@ class Swiss_Floorball_Api_Public {
 
 	public function get_club_teams_func() {
 		ob_start();
+		echo '<div class="swiss-floorball-plugin">';
 		Swiss_Floorball_API_Display::render_club_teams(get_option('swissfloorball_club_number'));
+		echo '</div>';
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -142,7 +144,9 @@ class Swiss_Floorball_Api_Public {
 
 	public function get_club_games_func(){
 		ob_start();
+		echo '<div class="swiss-floorball-plugin">';
 		Swiss_Floorball_API_Display::render_club_games(get_option('swissfloorball_club_number'), get_option('swissfloorball_actual_season'));
+		echo '</div>';
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -154,7 +158,9 @@ class Swiss_Floorball_Api_Public {
 		), $atts );
 
 		ob_start();
+		echo '<div class="swiss-floorball-plugin">';
 		Swiss_Floorball_API_Display::render_team_games($a['team_id'], get_option('swissfloorball_actual_season'));
+		echo '</div>';
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -162,7 +168,9 @@ class Swiss_Floorball_Api_Public {
 
     public function get_clubs_func() {
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_clubs();
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -179,7 +187,9 @@ class Swiss_Floorball_Api_Public {
         ), $atts );
 
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_calendars($a['team_id'], $a['club_id'], $a['season'], $a['league'], $a['game_class'], $a['group']);
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -187,7 +197,9 @@ class Swiss_Floorball_Api_Public {
 
     public function get_cups_func() {
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_cups();
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -201,7 +213,9 @@ class Swiss_Floorball_Api_Public {
         ), $atts );
 
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_groups($a['season'], $a['league'], $a['game_class']);
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -209,7 +223,9 @@ class Swiss_Floorball_Api_Public {
 
     public function get_teams_func() {
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_teams();
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -224,7 +240,9 @@ class Swiss_Floorball_Api_Public {
         ), $atts );
 
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_rankings($a['season'], $a['league'], $a['game_class'], $a['group']);
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -236,7 +254,9 @@ class Swiss_Floorball_Api_Public {
         ), $atts );
 
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_player($a['player_id']);
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -244,7 +264,9 @@ class Swiss_Floorball_Api_Public {
 
     public function get_national_players_func() {
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_national_players();
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -259,7 +281,9 @@ class Swiss_Floorball_Api_Public {
         ), $atts );
 
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_topscorers($a['season'], $a['league'], $a['game_class'], $a['group']);
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -271,7 +295,9 @@ class Swiss_Floorball_Api_Public {
         ), $atts );
 
         ob_start();
+        echo '<div class="swiss-floorball-plugin">';
         Swiss_Floorball_API_Display::render_game_events($a['game_id']);
+        echo '</div>';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;

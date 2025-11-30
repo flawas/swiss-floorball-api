@@ -111,6 +111,13 @@ A: Just drop me a message on [GitHub](https://github.com/flawas), [LinkedIn](htt
 
 ## 📜 Changelog
 
+### 1.0.1 (2025-11-30)
+
+* Feature: Implement detailed matches display in admin
+* Feature: Scope public CSS
+* Fix: Add release workflow documentation
+* Fix: Consistent language and naming in code
+
 ### 1.0.0 (2025-11-29)
 
 * Initial release
