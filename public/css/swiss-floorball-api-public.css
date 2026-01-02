@@ -274,8 +274,8 @@
     }
 
     /* Better handling of long content */
-    .swiss-floorball-plugin .table td > *,
-    .swiss-floorball-plugin .sfa-data-table td > * {
+    .swiss-floorball-plugin .table td>*,
+    .swiss-floorball-plugin .sfa-data-table td>* {
         word-break: break-word;
         max-width: 50%;
         text-align: right;
@@ -596,22 +596,90 @@
     }
 }
 
-/* Dark Mode Support (Optional) */
+/* Dark Mode Support - Fixed for readability */
 @media (prefers-color-scheme: dark) {
     :root {
-        --sfa-light-bg: #2c3e50;
-        --sfa-border: #34495e;
-        --sfa-text: #ecf0f1;
-        --sfa-text-light: #bdc3c7;
+        --sfa-light-bg: #1a1a1a;
+        --sfa-border: #333333;
+        --sfa-text: #ffffff;
+        --sfa-text-light: #b0b0b0;
     }
 
     .swiss-floorball-plugin .card,
-    .swiss-floorball-plugin .table {
-        background: #34495e;
+    .swiss-floorball-plugin .table,
+    .swiss-floorball-plugin .sfa-data-table {
+        background: #000000;
+        border-color: #333333;
     }
 
-    .swiss-floorball-plugin .table thead {
-        background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    .swiss-floorball-plugin .table thead,
+    .swiss-floorball-plugin .sfa-data-table thead {
+        background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+    }
+
+    .swiss-floorball-plugin .table td,
+    .swiss-floorball-plugin .sfa-data-table td {
+        color: #ffffff;
+        border-bottom-color: #333333;
+    }
+
+    .swiss-floorball-plugin .table th,
+    .swiss-floorball-plugin .sfa-data-table th {
+        color: #ffffff;
+    }
+
+    .swiss-floorball-plugin .card-title {
+        color: #ffffff;
+    }
+
+    .swiss-floorball-plugin .card-text {
+        color: #b0b0b0;
+    }
+
+    .swiss-floorball-plugin .empty-state {
+        background: #1a1a1a;
+        border-color: #333333;
+    }
+
+    .swiss-floorball-plugin .game-score-card {
+        background: #000000;
+        border-color: #333333;
+    }
+
+    /* Ensure striped rows remain visible in dark mode */
+    .swiss-floorball-plugin .table tbody tr:nth-child(even),
+    .swiss-floorball-plugin .sfa-data-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Mobile table card backgrounds */
+    @media screen and (max-width: 768px) {
+
+        .swiss-floorball-plugin .table tbody tr,
+        .swiss-floorball-plugin .sfa-data-table tbody tr {
+            background: #000000;
+            border-color: #333333;
+        }
+
+        .swiss-floorball-plugin .table tbody tr:nth-child(even),
+        .swiss-floorball-plugin .sfa-data-table tbody tr:nth-child(even) {
+            background: #000000;
+        }
+
+        .swiss-floorball-plugin .table td:first-child,
+        .swiss-floorball-plugin .sfa-data-table td:first-child {
+            background: linear-gradient(90deg, rgba(0, 102, 204, 0.15) 0%, transparent 100%);
+        }
+
+        .swiss-floorball-plugin .table td:nth-child(even),
+        .swiss-floorball-plugin .sfa-data-table td:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .swiss-floorball-plugin .table td::before,
+        .swiss-floorball-plugin .sfa-data-table td::before {
+            color: #ffffff;
+        }
     }
 }
 

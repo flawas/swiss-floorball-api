@@ -539,3 +539,165 @@
     color: var(--sfa-text-light);
     opacity: 0.7;
 }
+
+/* Dark Mode Support for WordPress Admin */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --sfa-light-bg: #1a1a1a;
+        --sfa-border: #333333;
+        --sfa-text: #ffffff;
+        --sfa-text-light: #b0b0b0;
+    }
+
+    /* Admin containers and cards */
+    .sfa-admin-wrap .sfa-card,
+    .sfa-table-container,
+    .sfa-form-section {
+        background: #000000;
+        border-color: #333333;
+    }
+
+    /* Data tables */
+    .sfa-data-table {
+        background: #000000;
+        border-color: #333333;
+    }
+
+    .sfa-data-table thead {
+        background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+    }
+
+    .sfa-data-table th {
+        color: #ffffff;
+    }
+
+    .sfa-data-table td {
+        color: #ffffff;
+        border-bottom-color: #333333;
+    }
+
+    .sfa-data-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .sfa-data-table tbody tr:hover {
+        background: linear-gradient(90deg, rgba(0, 102, 204, 0.1) 0%, transparent 100%);
+    }
+
+    /* Card headings */
+    .sfa-card h3 {
+        color: #ffffff;
+        border-bottom-color: #333333;
+    }
+
+    /* Settings table */
+    .sfa-settings-table td:first-child {
+        color: #b0b0b0;
+    }
+
+    .sfa-settings-table td:last-child {
+        color: #ffffff;
+    }
+
+    .sfa-settings-table tr {
+        border-bottom-color: #333333;
+    }
+
+    .sfa-settings-table tr:hover {
+        background: rgba(0, 102, 204, 0.05);
+    }
+
+    /* Form elements */
+    .form-table th {
+        color: #ffffff;
+    }
+
+    .form-table input[type="text"],
+    .form-table input[type="number"] {
+        background: #1a1a1a;
+        border-color: #333333;
+        color: #ffffff;
+    }
+
+    .form-table input[type="text"]:focus,
+    .form-table input[type="number"]:focus {
+        background: #000000;
+        border-color: var(--sfa-primary);
+    }
+
+    /* Card buttons */
+    .sfa-card .button {
+        background: #1a1a1a;
+        color: #ffffff;
+        border-color: #333333;
+    }
+
+    .sfa-card .button:hover {
+        background: var(--sfa-primary);
+        color: white;
+    }
+
+    /* Empty state */
+    .sfa-empty-state {
+        background: #1a1a1a;
+        border-color: #333333;
+        color: #b0b0b0;
+    }
+
+    /* Search input */
+    .sfa-search-input {
+        background: #1a1a1a;
+        border-color: #333333;
+        color: #ffffff;
+    }
+
+    .sfa-search-input:focus {
+        background: #000000;
+    }
+
+    .sfa-search-input::placeholder {
+        color: #666666;
+    }
+
+    /* Helper text */
+    .sfa-helper-text {
+        color: #b0b0b0;
+    }
+
+    /* Table container headings */
+    .sfa-table-container h2,
+    .sfa-form-section h2 {
+        color: var(--sfa-primary-light);
+        border-bottom-color: #333333;
+    }
+
+    /* Stat cards */
+    .sfa-stat-card {
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        border-color: #333333;
+    }
+
+    .sfa-stat-label {
+        color: #b0b0b0;
+    }
+
+    /* WordPress notices - ensure readability in dark mode */
+    .notice,
+    .updated,
+    .error,
+    .settings-error {
+        background: #1a1a1a !important;
+        border-left-color: var(--sfa-primary) !important;
+    }
+
+    .notice p,
+    .updated p,
+    .error p,
+    .settings-error p {
+        color: #ffffff !important;
+    }
+
+    .notice-dismiss {
+        color: #ffffff !important;
+    }
+}

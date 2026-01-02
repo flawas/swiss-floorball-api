@@ -111,6 +111,11 @@ A: Just drop me a message on [GitHub](https://github.com/flawas), [LinkedIn](htt
 
 ## 📜 Changelog
 
+### 1.0.2 (2026-01-02)
+
+* Fix: Mobile table background color
+* Fix: Mobile table text alignment
+
 ### 1.0.1 (2025-11-30)
 
 * Feature: Implement detailed matches display in admin
