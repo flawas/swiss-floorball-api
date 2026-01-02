@@ -16,7 +16,7 @@
  * Plugin Name:       Swiss Unihockey API
  * Plugin URI:        https://flaviowaser.ch
  * Description:       Ein kleines Plugin, welches ermöglicht, die aktuellen Daten der Swiss Unihockey API abzufragen und auf der Webseite darzustellen.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Flavio Waser
  * Author URI:        https://flaviowaser.ch/
  * License:           GPL-2.0+
